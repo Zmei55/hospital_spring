@@ -1,5 +1,6 @@
 package com.hospital_spring.users.controllers.api;
 
+import com.hospital_spring.security.config.details.AuthenticatedUser;
 import com.hospital_spring.users.dto.ProfileDto;
 import com.hospital_spring.users.dto.UserDto;
 import com.hospital_spring.users.dto.UserUpdateDto;
@@ -20,20 +21,20 @@ import org.springframework.web.bind.annotation.*;
 })
 @RequestMapping("/api/users")
 public interface UsersApi {
-//    @Operation(summary = "Get current user info")
-//    @ApiResponses(value = {
-//        @ApiResponse(responseCode = "200", description = "Current user",
-//            content = {
-//                @Content(mediaType = "application/json",
-//                    schema = @Schema(implementation = ProfileDto.class))
-//            }
-//        )
-//    })
-//    @GetMapping("/profile")
-//    ResponseEntity<ProfileDto> getProfile(
-//        @Parameter(hidden = true)
-//        @AuthenticationPrincipal AuthenticatedUser currentUser
-//    );
+    @Operation(summary = "Get current user info")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Current user",
+            content = {
+                @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ProfileDto.class))
+            }
+        )
+    })
+    @GetMapping("/profile")
+    ResponseEntity<ProfileDto> getProfile(
+        @Parameter(hidden = true)
+        @AuthenticationPrincipal AuthenticatedUser currentUser
+    );
 
     @Operation(summary = "Get user by id")
     @ApiResponses(value = {
@@ -47,18 +48,17 @@ public interface UsersApi {
     @GetMapping("/{user-id}")
     ResponseEntity<UserDto> getUser(@PathVariable("user-id") Long userId);
 
-//    @Operation(summary = "Update user")
-//    @ApiResponses(value = {
-//        @ApiResponse(responseCode = "200", description = "Update user by id",
-//            content = {
-//                @Content(mediaType = "application/json",
-//                    schema = @Schema(implementation = UserDto.class))
-//            }
-//        )
-//    })
-//    @PutMapping("/{userId}")
-//    ResponseEntity<ProfileDto> updateUser(
-//        @Parameter(hidden = true)
-//        @AuthenticationPrincipal AuthenticatedUser currentUser,
-//        @RequestBody UserUpdateDto updatedUser);
+    @Operation(summary = "Update user")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Update user by id",
+            content = {
+                @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = UserDto.class))
+            }
+        )
+    })
+    @PutMapping("/{user-id}")
+    ResponseEntity<ProfileDto> updateUser(
+        @Parameter(hidden = true) @PathVariable("user-id") Long userId,
+        @RequestBody UserUpdateDto updatedUser);
 }

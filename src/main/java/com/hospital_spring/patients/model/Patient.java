@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Builder
+@Table(name = "patients")
 public class Patient {
     public enum Gender {männlich, weiblich, divers}
 

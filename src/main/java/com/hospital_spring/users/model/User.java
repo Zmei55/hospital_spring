@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Builder
+@Table(name = "users")
 public class User {
     public enum Role {ADMIN, USER}
 
@@ -28,6 +29,7 @@ public class User {
     private String username;
     @NotNull
     private String hashPassword;
+    private String email;
     @Enumerated(value = EnumType.STRING)
     private Role role;
     private LocalDateTime createdDate;

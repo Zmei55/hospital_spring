@@ -1,6 +1,6 @@
 package com.hospital_spring.patients.services.impl;
 
-import com.hospital_spring.exceptions.NotFoundException;
+import com.hospital_spring.shared.exceptions.NotFoundException;
 import com.hospital_spring.patients.dto.FilterPatientDto;
 import com.hospital_spring.patients.dto.NewPatientDto;
 import com.hospital_spring.patients.dto.PatientDto;

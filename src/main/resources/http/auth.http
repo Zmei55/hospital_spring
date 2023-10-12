@@ -1,0 +1,40 @@
+POST localhost:8080/api/auth/sign-up
+Content-Type: application/json
+
+{
+  "username": "qwe",
+  "password": "qwe123",
+  "firstName": "John",
+  "lastName": "Smith"
+}
+
+###
+
+GET localhost:8080/login
+Content-Type: application/x-www-form-urlencoded
+
+username=qwe&password=qwe123
+#{
+#  "username": "qwe",
+#  "password": "qwe123"
+#}
+
+###
+
+GET localhost:8080/logout
+
+###
+
+POST localhost:8080/auth/token
+Content-Type: application/x-www-form-urlencoded
+
+email=qwe&password=qwe123
+email=asd&password=asd123
+#email=admin&password=admin
+#username=qwe&password=qwe123
+
+###
+
+GET localhost:8080/api/users/1
+Authorization: Bearer 441edc71-b234-4c47-af21-c10b4f2d7d5f
+#Authorization: Bearer 9301712e-8de3-44d3-a78d-cf1a1e365e1f

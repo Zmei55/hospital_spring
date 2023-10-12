@@ -1,4 +1,4 @@
-package com.hospital_spring.exceptions.dto;
+package com.hospital_spring.shared.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
+@Schema(description = "Exception details")
 public class ExceptionDto {
     @Schema(description = "Exception text")
     private String message;
