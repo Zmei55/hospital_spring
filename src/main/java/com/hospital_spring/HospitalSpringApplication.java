@@ -9,13 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class HospitalSpringApplication {
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-//    @Bean
-//    public ObjectMapper objectMapper;
 
     public static void main(String[] args) {
         SpringApplication.run(HospitalSpringApplication.class, args);

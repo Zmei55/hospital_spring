@@ -34,7 +34,7 @@ public class TokenSecurityConfig {
         httpSecurity.authorizeRequests()
             .antMatchers("/swagger-ui/**").permitAll()
             .antMatchers("/v3/api-docs/**").permitAll()
-            .antMatchers("/api/auth/sign-up/**").permitAll()
+//            .antMatchers("/api/auth/sign-up/**").permitAll()
 //            .antMatchers("/auth/token").permitAll()
 //            .anyRequest().hasAuthority("ADMIN")
             .anyRequest().authenticated()

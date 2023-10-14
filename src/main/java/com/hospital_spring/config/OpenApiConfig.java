@@ -1,4 +1,4 @@
-package com.hospital_spring.security.config;
+package com.hospital_spring.config;
 
 import io.swagger.v3.oas.models.*;
 import io.swagger.v3.oas.models.info.Info;

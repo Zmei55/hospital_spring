@@ -23,6 +23,8 @@ public class ProfileDto {
     private String username;
     @Schema(description = "role of the user", example = "USER")
     private String role;
+    @Schema(description = "workplace of the user", example = "surgery")
+    private String workplace;
 
     public static ProfileDto from(User user) {
         return ProfileDto.builder()
@@ -31,6 +33,7 @@ public class ProfileDto {
             .lastName(user.getLastName())
             .username(user.getUsername())
             .role(user.getRole().name())
+            .workplace(user.getWorkplace().name())
             .build();
     }
 }

@@ -18,6 +18,8 @@ import java.time.LocalDateTime;
 public class User {
     public enum Role {ADMIN, USER}
 
+    public enum Workplace {SURGERY__TREATMENT_ROOM}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,5 +34,7 @@ public class User {
     private String email;
     @Enumerated(value = EnumType.STRING)
     private Role role;
+    @Enumerated(value = EnumType.STRING)
+    private Workplace workplace;
     private LocalDateTime createdDate;
 }

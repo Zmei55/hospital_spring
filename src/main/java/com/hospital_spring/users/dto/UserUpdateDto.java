@@ -16,4 +16,6 @@ public class UserUpdateDto {
     private String firstName;
     @Schema(description = "lastName of the user", example = "Smith")
     private String lastName;
+    @Schema(description = "workplace of the user", example = "surgery")
+    private String workplace;
 }

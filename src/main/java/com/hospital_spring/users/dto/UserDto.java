@@ -17,11 +17,14 @@ public class UserDto {
     private Long id;
     @Schema(description = "username of the user", example = "username325")
     private String username;
+    @Schema(description = "workplace of the user", example = "surgery")
+    private String workplace;
 
     public static UserDto from(User user) {
         return UserDto.builder()
             .id(user.getId())
             .username(user.getUsername())
+            .workplace(user.getWorkplace().name())
             .build();
     }
 }
