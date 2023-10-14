@@ -52,7 +52,7 @@ public class OpenApiConfig {
             new Content().addMediaType(
                 "application/x-www-form-urlencoded",
                 new MediaType().schema(
-                    new Schema<>().$ref("EmailAndPassword")
+                    new Schema<>().$ref("UsernameAndPassword")
                 )
             )
         );
@@ -86,9 +86,9 @@ public class OpenApiConfig {
 
     // оформление раздела "компоненты" (содержит все компоненты схемы (дто)) "Components"
     private Components buildComponents() {
-        Schema<?> emailAndPassword = new Schema<>()
+        Schema<?> usernameAndPassword = new Schema<>()
             .type("object")
-            .description("Email and password of the user")
+            .description("Username and password of the user")
             .addProperty(USERNAME_PARAMETER, new Schema<>().type("string"))
             .addProperty("password", new Schema<>().type("string"));
 
@@ -105,7 +105,7 @@ public class OpenApiConfig {
             .bearerFormat("JWT");
 
         return new Components()
-            .addSchemas("EmailAndPassword", emailAndPassword)
+            .addSchemas("UsernameAndPassword", usernameAndPassword)
             .addSchemas("Tokens", tokens)
             .addSecuritySchemes(BEARER_AUTH, securityScheme);
     }
