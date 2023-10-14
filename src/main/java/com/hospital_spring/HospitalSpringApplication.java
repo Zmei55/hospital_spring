@@ -1,5 +1,6 @@
 package com.hospital_spring;
 
+//import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,9 @@ public class HospitalSpringApplication {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+//    @Bean
+//    public ObjectMapper objectMapper;
 
     public static void main(String[] args) {
         SpringApplication.run(HospitalSpringApplication.class, args);

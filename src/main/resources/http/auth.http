@@ -29,12 +29,18 @@ POST localhost:8080/auth/token
 Content-Type: application/x-www-form-urlencoded
 
 email=qwe&password=qwe123
-email=asd&password=asd123
-#email=admin&password=admin
+#email=asd&password=asd123
 #username=qwe&password=qwe123
 
 ###
 
 GET localhost:8080/api/users/1
-Authorization: Bearer 441edc71-b234-4c47-af21-c10b4f2d7d5f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJxd2UiLCJleHAiOjE2OTczMTIxODksInJvbGUiOiJBRE1JTiIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9hdXRoL3Rva2VuIn0.0SfP0-mmRm58yGd23AJxRk75jszMQKEr5n_DNr98gw4
 #Authorization: Bearer 9301712e-8de3-44d3-a78d-cf1a1e365e1f
+
+###
+
+POST localhost:8080/auth/token
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJxd2UiLCJleHAiOjE2OTczMTIzMDksInJvbGUiOiJBRE1JTiIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9hdXRoL3Rva2VuIn0.MjNoge88Kfws1M8Gf2EsVdsPaDbKaPTWAwNXK0npwoY
+
+# если accessToken выдаёт ошибку 401, то веб-приложение должно отправлять refreshToken

@@ -31,3 +31,5 @@ public interface AuthApi {
     @PostMapping("/sign-up")
     ResponseEntity<UserDto> signUp(@RequestBody NewUserDto newUserDto);
 }
+
+// logout -> удаление токена из базы
