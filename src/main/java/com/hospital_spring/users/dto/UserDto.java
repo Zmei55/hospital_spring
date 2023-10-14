@@ -19,12 +19,15 @@ public class UserDto {
     private String username;
     @Schema(description = "workplace of the user", example = "surgery")
     private String workplace;
+    @Schema(description = "user is not locked", example = "true")
+    private boolean isNotLocked;
 
     public static UserDto from(User user) {
         return UserDto.builder()
             .id(user.getId())
             .username(user.getUsername())
             .workplace(user.getWorkplace().name())
+            .isNotLocked(user.isNotLocked())
             .build();
     }
 }

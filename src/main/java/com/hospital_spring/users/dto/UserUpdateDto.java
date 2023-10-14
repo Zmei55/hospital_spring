@@ -18,4 +18,6 @@ public class UserUpdateDto {
     private String lastName;
     @Schema(description = "workplace of the user", example = "surgery")
     private String workplace;
+    @Schema(description = "user is not locked", example = "true")
+    private boolean isNotLocked;
 }

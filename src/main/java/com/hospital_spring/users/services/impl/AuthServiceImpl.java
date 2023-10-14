@@ -25,9 +25,11 @@ public class AuthServiceImpl implements AuthService {
         User user = User.builder()
             .username(newUserDto.getUsername())
             .hashPassword(passwordEncoder.encode(newUserDto.getPassword()))
-            .role(User.Role.USER)
             .firstName(newUserDto.getFirstName())
             .lastName(newUserDto.getLastName())
+            .role(User.Role.USER)
+            .workplace(newUserDto.getWorkplace())
+            .isNotLocked(true)
             .createdDate(LocalDateTime.now())
             .build();
         usersRepository.save(user);

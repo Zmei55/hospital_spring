@@ -25,6 +25,8 @@ public class ProfileDto {
     private String role;
     @Schema(description = "workplace of the user", example = "surgery")
     private String workplace;
+    @Schema(description = "user is not locked", example = "true")
+    private boolean isNotLocked;
 
     public static ProfileDto from(User user) {
         return ProfileDto.builder()
@@ -34,6 +36,7 @@ public class ProfileDto {
             .username(user.getUsername())
             .role(user.getRole().name())
             .workplace(user.getWorkplace().name())
+            .isNotLocked(user.isNotLocked())
             .build();
     }
 }

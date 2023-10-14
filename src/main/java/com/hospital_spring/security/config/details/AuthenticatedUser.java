@@ -15,10 +15,6 @@ import java.util.Collections;
 public class AuthenticatedUser implements UserDetails { // UserDetailsImpl
     private final User user;
 
-//    public AuthenticatedUser(User user) {
-//        this.user = user;
-//    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().name());
@@ -42,7 +38,7 @@ public class AuthenticatedUser implements UserDetails { // UserDetailsImpl
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return user.isNotLocked();
     }
 
     @Override

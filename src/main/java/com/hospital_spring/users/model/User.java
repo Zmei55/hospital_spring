@@ -36,5 +36,8 @@ public class User {
     private Role role;
     @Enumerated(value = EnumType.STRING)
     private Workplace workplace;
+    @NotNull
     private LocalDateTime createdDate;
+    @NotNull
+    private boolean isNotLocked;
 }

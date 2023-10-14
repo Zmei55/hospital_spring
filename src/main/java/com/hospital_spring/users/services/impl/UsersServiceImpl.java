@@ -48,6 +48,7 @@ public class UsersServiceImpl implements UsersService {
         user.setFirstName(updatedUser.getFirstName());
         user.setLastName(updatedUser.getLastName());
         user.setWorkplace(User.Workplace.valueOf(updatedUser.getWorkplace()));
+        user.setNotLocked(updatedUser.isNotLocked());
 
         usersRepository.save(user);
 
