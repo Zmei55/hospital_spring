@@ -6,7 +6,6 @@ import com.hospital_spring.users.model.User;
 import com.hospital_spring.users.repositories.UsersRepository;
 import com.hospital_spring.users.services.AuthService;
 import lombok.RequiredArgsConstructor;
-//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +20,9 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public UserDto signUp(NewUserDto newUserDto) {
         // сделать проверку что пользователя с таким username в БД нет
+        // if (usersRepository.findByUsername(newUserDto.getUsername()).isPresent()) {
+        //     return ошибку о том что пользователь с таким username уже есть;
+        // } // и регистрация не продолжится
 
         User user = User.builder()
             .username(newUserDto.getUsername())

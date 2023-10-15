@@ -25,10 +25,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final JwtUtil jwtUtil;
     private final AuthorizationHeaderUtil authorizationHeaderUtil;
     private final ObjectMapper objectMapper;
-    public static final String USERNAME_PARAMETER = "email"; // по умолчанию - "username"
-    public static final String AUTHENTICATION_URL = "/auth/token";
+    public static final String SIGN_UP_URL = "/api/auth/register";
+    public static final String SIGN_IN_URL = "/api/auth/login";
+    public static final String SIGN_OUT_URL = "/api/auth/logout";
 
-    // вытаскиваем "email", а не "username"
+    // конструктор класса фильтра
     public JwtAuthenticationFilter(
         AuthenticationConfiguration authenticationConfiguration,
         JwtUtil jwtUtil,
@@ -38,19 +39,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         super(authenticationConfiguration.getAuthenticationManager());
         this.jwtUtil = jwtUtil;
         this.authorizationHeaderUtil = authorizationHeaderUtil;
-        this.setUsernameParameter(USERNAME_PARAMETER);
-        this.setFilterProcessesUrl(AUTHENTICATION_URL);
+        this.setFilterProcessesUrl(SIGN_IN_URL);
         this.objectMapper = objectMapper;
     }
 
     // пытается аутентифицировать пользователя
     // "username" и "password" достаёт самостоятельно
-//    @Override
-//    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-//        return super.attemptAuthentication(request, response);
-//    }
-
     // для обновления токена
+    // если у spring security нет токена, тогда использует по умолчанию "username" и "password"
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         if (authorizationHeaderUtil.hasAuthorizationToken(request)) {
@@ -62,16 +58,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         }
     }
 
-    // при положительной аутентификации выдать токен(любую строку)
+    // при положительной аутентификации отправлять accessToken
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         response.setContentType("application/json");
 
         GrantedAuthority currentAuthority = authResult.getAuthorities().stream().findFirst().orElseThrow();
-        String email = ((AuthenticatedUser)authResult.getPrincipal()).getUsername();
+        String username = ((AuthenticatedUser)authResult.getPrincipal()).getUsername();
         String issuer = request.getRequestURL().toString();
 
-        Map<String, String> tokens = jwtUtil.generateTokens(email, currentAuthority.getAuthority(), issuer);
+        Map<String, String> tokens = jwtUtil.generateTokens(username, currentAuthority.getAuthority(), issuer);
 
         objectMapper.writeValue(response.getOutputStream(), tokens);
     }

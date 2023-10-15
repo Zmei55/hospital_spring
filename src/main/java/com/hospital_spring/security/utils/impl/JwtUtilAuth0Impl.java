@@ -39,15 +39,15 @@ public class JwtUtilAuth0Impl implements JwtUtil {
 
         String accessToken = JWT.create()
             .withSubject(subject)
-            .withExpiresAt(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRES_TIME)) // на какое время выдан токен
-            .withClaim("role", authority)
+            .withExpiresAt(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRES_TIME)) // на какое время выдан accessToken
+            .withClaim("workplace", authority)
             .withIssuer(issuer)
             .sign(algorithm);
 
         String refreshToken = JWT.create()
             .withSubject(subject)
-            .withExpiresAt(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRES_TIME)) // на какое время выдан токен
-            .withClaim("role", authority)
+            .withExpiresAt(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRES_TIME)) // на какое время выдан refreshToken
+            .withClaim("workplace", authority)
             .withIssuer(issuer)
             .sign(algorithm);
 
@@ -58,7 +58,7 @@ public class JwtUtilAuth0Impl implements JwtUtil {
         return tokens;
     }
 
-    // 1. импл метод из интерф
+    // 1. имплементирует метод из интерфейса
     @Override
     public Authentication buildAuthentication(String token) throws JWTVerificationException {
         // 4. собираем объект аутентификации
@@ -66,15 +66,15 @@ public class JwtUtilAuth0Impl implements JwtUtil {
 
         UserDetails userDetails = new AuthenticatedUser(
             User.builder()
-                .email(parsedToken.getEmail())
-                .role(User.Role.valueOf(parsedToken.getRole()))
+                .username(parsedToken.getUsername())
+                .workplace(User.Workplace.SURGERY__TREATMENT_ROOM)
                 .build()
         );
 
         return new UsernamePasswordAuthenticationToken(
             userDetails,
             null,
-            Collections.singleton(new SimpleGrantedAuthority(parsedToken.getRole()))
+            Collections.singleton(new SimpleGrantedAuthority(parsedToken.getWorkplace()))
         );
     }
 
@@ -85,12 +85,12 @@ public class JwtUtilAuth0Impl implements JwtUtil {
         JWTVerifier verifier = JWT.require(algorithm).build(); // верификация токена
         DecodedJWT decodedJWT = verifier.verify(token); // декодирование токена
 
-        String email = decodedJWT.getSubject(); // вытаскиваем email из токена
-        String role = decodedJWT.getClaim("role").asString(); // вытаскиваем role из токена
+        String username = decodedJWT.getSubject();
+        String workplace = decodedJWT.getClaim("workplace").asString();
 
         return ParsedToken.builder()
-            .email(email)
-            .role(role)
+            .username(username)
+            .workplace(workplace)
             .build();
     }
 
@@ -100,7 +100,7 @@ public class JwtUtilAuth0Impl implements JwtUtil {
     @Data
     @Builder
     private static class ParsedToken {
-        private String email;
-        private String role;
+        private String username;
+        private String workplace;
     }
 }

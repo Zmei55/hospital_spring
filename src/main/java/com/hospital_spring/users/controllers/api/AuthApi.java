@@ -28,8 +28,8 @@ public interface AuthApi {
             }
         )
     })
-    @PostMapping("/sign-up")
+    @PostMapping("/register")
     ResponseEntity<UserDto> signUp(@RequestBody NewUserDto newUserDto);
 }
 
-// logout -> удаление токена из базы
+// при logout отправлять пустой tokens (null)

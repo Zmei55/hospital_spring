@@ -13,13 +13,14 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import static com.hospital_spring.security.filter.JwtAuthenticationFilter.AUTHENTICATION_URL;
-import static com.hospital_spring.security.filter.JwtAuthenticationFilter.USERNAME_PARAMETER;
+import static com.hospital_spring.security.filter.JwtAuthenticationFilter.SIGN_IN_URL;
+import static com.hospital_spring.security.filter.JwtAuthenticationFilter.SIGN_OUT_URL;
 
 // оформление OpenApi для аутентификации
 @Configuration
 public class OpenApiConfig {
     public static final String BEARER_AUTH = "bearerAuth";
+    public static final String TAGS_ITEM_AUTHENTICATION = "Authentication";
 
     @Bean
     public OpenAPI customOpenApi() {
@@ -33,16 +34,25 @@ public class OpenApiConfig {
     // оформление пути
     private Paths buildAuthenticationPath() {
         return new Paths()
-            .addPathItem(AUTHENTICATION_URL, buildAuthenticationPathItem());
+            .addPathItem(SIGN_IN_URL, buildAuthenticationPathItem())
+            .addPathItem(SIGN_OUT_URL, buildLoguotPathItem());
     }
 
     // оформление запроса
     private PathItem buildAuthenticationPathItem() {
         return new PathItem().post(
             new Operation()
-                .addTagsItem("Authentication")
+                .addTagsItem(TAGS_ITEM_AUTHENTICATION)
                 .requestBody(buildAuthenticationRequestBody())
                 .responses(buildAuthenticationResponses())
+        );
+    }
+
+    private PathItem buildLoguotPathItem() {
+        return new PathItem().get(
+            new Operation()
+                .addTagsItem(TAGS_ITEM_AUTHENTICATION)
+                .responses(buildLogoutResponses())
         );
     }
 
@@ -52,9 +62,7 @@ public class OpenApiConfig {
             new Content().addMediaType(
                 "application/x-www-form-urlencoded",
                 new MediaType().schema(
-                    new Schema<>().$ref("UsernameAndPassword")
-                )
-            )
+                    new Schema<>().$ref("UsernameAndPassword")))
         );
     }
 
@@ -65,9 +73,13 @@ public class OpenApiConfig {
                 new Content().addMediaType(
                     "application/json", new MediaType().schema(
                         new Schema<>().$ref("Tokens")
-                    )
-                )
-            )
+                    )))
+        );
+    }
+
+    private ApiResponses buildLogoutResponses() {
+        return new ApiResponses().addApiResponse(
+            "200", new ApiResponse().description("Successful logout")
         );
     }
 
@@ -89,7 +101,7 @@ public class OpenApiConfig {
         Schema<?> usernameAndPassword = new Schema<>()
             .type("object")
             .description("Username and password of the user")
-            .addProperty(USERNAME_PARAMETER, new Schema<>().type("string"))
+            .addProperty("username", new Schema<>().type("string"))
             .addProperty("password", new Schema<>().type("string"));
 
         Schema<?> tokens = new Schema<>()

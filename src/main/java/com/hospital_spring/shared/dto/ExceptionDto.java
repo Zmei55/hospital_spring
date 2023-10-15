@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -16,4 +18,12 @@ public class ExceptionDto {
     private String message;
     @Schema(description = "Exception http-status")
     private int status;
+    @Schema(description = "Exception date")
+    private LocalDateTime timestamp;
+
+//    public ExceptionDto(String message, int status) {
+//        this.message = message;
+//        this.status = status;
+//        this.timestamp = LocalDateTime.now();
+//    }
 }

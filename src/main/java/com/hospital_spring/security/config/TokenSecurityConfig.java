@@ -6,6 +6,7 @@ import com.hospital_spring.security.filter.JwtAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,7 +14,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static com.hospital_spring.security.filter.JwtAuthenticationFilter.*;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -34,20 +38,17 @@ public class TokenSecurityConfig {
         httpSecurity.authorizeRequests()
             .antMatchers("/swagger-ui/**").permitAll()
             .antMatchers("/v3/api-docs/**").permitAll()
-//            .antMatchers("/api/auth/sign-up/**").permitAll()
-//            .antMatchers("/auth/token").permitAll()
-//            .anyRequest().hasAuthority("ADMIN")
-            .anyRequest().authenticated()
-//            .and()
-//            .formLogin()
-//            .defaultSuccessUrl("/swagger-ui/index.html")
-//            .and()
-//            .exceptionHandling()
-//            .defaultAuthenticationEntryPointFor(
-//                new Http403ForbiddenEntryPoint(),
-//                new AntPathRequestMatcher("/api/**")
-//            )
-        ;
+            .antMatchers(SIGN_UP_URL).not().fullyAuthenticated() //Доступ только для не зарегистрированных пользователей
+            .anyRequest().hasAuthority("SURGERY__TREATMENT_ROOM")
+            .and()
+            .exceptionHandling()
+            .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+            .and()
+            .formLogin()
+            .loginProcessingUrl(SIGN_IN_URL)
+            .and()
+            .logout()
+            .logoutUrl(SIGN_OUT_URL);
 
         httpSecurity.addFilter(jwtAuthenticationFilter);
         httpSecurity.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class); // ложим фильтр перед юзерпасворд...(самый первый)

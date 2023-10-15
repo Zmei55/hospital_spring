@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @Schema(name = "StandardResponseDto", description = "Request details")
-public class StandardResponseDto {
+public class CustomerResponseDto {
     @Schema(description = "Message text")
     private String message;
     @Schema(description = "HTTP-status")

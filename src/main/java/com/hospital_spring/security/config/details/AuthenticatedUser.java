@@ -17,7 +17,8 @@ public class AuthenticatedUser implements UserDetails { // UserDetailsImpl
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().name());
+//        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().name());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getWorkplace().name());
         return Collections.singleton(authority);
     }
 
