@@ -3,6 +3,7 @@ package com.hospital_spring.shared.advices;
 import com.hospital_spring.shared.exceptions.NotFoundException;
 import com.hospital_spring.shared.dto.ExceptionDto;
 import com.hospital_spring.shared.exceptions.UserIsPresentException;
+import com.hospital_spring.shared.exceptions.UsernameOrPasswordIncorrectExceptions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +29,22 @@ public class RestExceptionHandler {
             );
     }
 
-    // Обрабатывает ошибки "UserIsPresent" (пользователь существует)
+    // Обрабатывает ошибки "UserIsPresentExceptions" (пользователь существует)
     @ExceptionHandler(UserIsPresentException.class)
     public ResponseEntity<ExceptionDto> handleUserIsPresent(UserIsPresentException exception) {
+        log.error(exception.toString());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(ExceptionDto.builder()
+                .message(exception.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timestamp(LocalDateTime.now())
+                .build());
+    }
+
+    // Обрабатывает ошибки "UsernameOrPasswordIncorrectExceptions" (имя пользователя или пароль не корректны)
+    @ExceptionHandler(UsernameOrPasswordIncorrectExceptions.class)
+    public ResponseEntity<ExceptionDto> handleUsernameOrPasswordIncorrect(UsernameOrPasswordIncorrectExceptions exception) {
         log.error(exception.toString());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
