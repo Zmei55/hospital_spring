@@ -1,11 +1,14 @@
 package com.hospital_spring.users.services.impl;
 
-import com.hospital_spring.users.dto.NewUserDto;
+import com.hospital_spring.shared.dto.ResponseDto;
+import com.hospital_spring.shared.exceptions.UserIsPresentException;
 import com.hospital_spring.users.dto.UserDto;
 import com.hospital_spring.users.model.User;
 import com.hospital_spring.users.repositories.UsersRepository;
 import com.hospital_spring.users.services.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,24 +21,33 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserDto signUp(NewUserDto newUserDto) {
-        // сделать проверку что пользователя с таким username в БД нет
-        // if (usersRepository.findByUsername(newUserDto.getUsername()).isPresent()) {
-        //     return ошибку о том что пользователь с таким username уже есть;
-        // } // и регистрация не продолжится
-
+    public ResponseEntity<ResponseDto> signUp(
+        String username,
+        String password,
+        String firstName,
+        String lastName,
+        String workplace
+    ) throws UserIsPresentException {
+        if (usersRepository.findByUsername(username).isPresent()) {
+            throw new UserIsPresentException("User is present");
+        }
         User user = User.builder()
-            .username(newUserDto.getUsername())
-            .hashPassword(passwordEncoder.encode(newUserDto.getPassword()))
-            .firstName(newUserDto.getFirstName())
-            .lastName(newUserDto.getLastName())
+            .username(username)
+            .hashPassword(passwordEncoder.encode(password))
+            .firstName(firstName)
+            .lastName(lastName)
             .role(User.Role.USER)
-            .workplace(newUserDto.getWorkplace())
+            .workplace(User.Workplace.valueOf(workplace))
             .isNotLocked(true)
             .createdDate(LocalDateTime.now())
             .build();
         usersRepository.save(user);
 
-        return UserDto.from(user);
+        return ResponseEntity.status(HttpStatus.CREATED.value())
+            .body(ResponseDto.builder()
+                .message("Created")
+                .status(HttpStatus.CREATED.value())
+                .data(UserDto.from(user))
+                .build());
     }
 }
