@@ -22,40 +22,25 @@ import org.springframework.stereotype.Component;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 public class JwtUtilAuth0Impl implements JwtUtil {
-    private static final long ACCESS_TOKEN_EXPIRES_TIME = 1 * 60 * 1000; // one minute
-    private static final long REFRESH_TOKEN_EXPIRES_TIME = 3 * 60 * 1000; // three minutes
+    private static final long ACCESS_TOKEN_EXPIRES_TIME = 60 * 1000; // one minute
+//    private static final long REFRESH_TOKEN_EXPIRES_TIME = 3 * 60 * 1000; // three minutes
 
     @Value("${jwt.secret}")
     private String secret;
 
     @Override
-    public Map<String, String> generateTokens(String subject, String authority, String issuer) {
+    public String generateToken(String subject, String authority, String issuer) {
         Algorithm algorithm = Algorithm.HMAC256(secret.getBytes(StandardCharsets.UTF_8)); // алгоритм создания токена
 
-        String accessToken = JWT.create()
+        return JWT.create()
             .withSubject(subject)
             .withExpiresAt(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRES_TIME)) // на какое время выдан accessToken
             .withClaim("workplace", authority)
             .withIssuer(issuer)
             .sign(algorithm);
-
-        String refreshToken = JWT.create()
-            .withSubject(subject)
-            .withExpiresAt(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRES_TIME)) // на какое время выдан refreshToken
-            .withClaim("workplace", authority)
-            .withIssuer(issuer)
-            .sign(algorithm);
-
-        Map<String, String> tokens = new HashMap<>();
-        tokens.put("accessToken", accessToken);
-        tokens.put("refreshToken", refreshToken);
-
-        return tokens;
     }
 
     // 1. имплементирует метод из интерфейса

@@ -32,12 +32,15 @@ public class User {
     @NotNull
     private String hashPassword;
     private String email;
+    @NotNull
     @Enumerated(value = EnumType.STRING)
     private Role role;
+    @NotNull
     @Enumerated(value = EnumType.STRING)
     private Workplace workplace;
     @NotNull
     private LocalDateTime createdDate;
     @NotNull
     private boolean isNotLocked;
+    private String token;
 }
