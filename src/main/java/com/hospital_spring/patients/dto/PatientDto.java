@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Builder
 public class PatientDto {
     @Schema(description = "id of the patient", example = "1")
-    private Long id;
+    private Long _id;
     @Schema(description = "First name of the patient", example = "John")
     private String firstName;
     @Schema(description = "Last name of the patient", example = "Smith")
@@ -34,12 +34,12 @@ public class PatientDto {
     private String email;
     @Schema(description = "Identity document of the patient", example = "Pass")
     private String identityDocument;
-    @Schema(description = "Id of the address of the patient", example = "1")
-    private Long addressId;
+//    @Schema(description = "Id of the address of the patient", example = "1")
+//    private Long addressId;
 
     public static PatientDto from(Patient patient) {
         return PatientDto.builder()
-            .id(patient.getId())
+            ._id(patient.getId())
             .firstName(patient.getFirstName())
             .lastName(patient.getLastName())
             .birthDate(patient.getBirthDate())

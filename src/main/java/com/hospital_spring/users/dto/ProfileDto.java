@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Profile user")
 public class ProfileDto {
     @Schema(description = "id of the account", example = "1")
-    private Long id;
+    private Long _id;
     @Schema(description = "firstName of the user", example = "John")
     private String firstName;
     @Schema(description = "lastName of the user", example = "Smith")
@@ -27,16 +27,19 @@ public class ProfileDto {
     private String workplace;
     @Schema(description = "user is not locked", example = "true")
     private boolean isNotLocked;
+    @Schema(description = "token of the account", example = "ksjdnf.sdkjnfsk.sdkfkdlfk")
+    private String token;
 
     public static ProfileDto from(User user) {
         return ProfileDto.builder()
-            .id(user.getId())
+            ._id(user.getId())
             .firstName(user.getFirstName())
             .lastName(user.getLastName())
             .username(user.getUsername())
             .role(user.getRole().name())
             .workplace(user.getWorkplace().name())
             .isNotLocked(user.isNotLocked())
+            .token(user.getToken())
             .build();
     }
 }

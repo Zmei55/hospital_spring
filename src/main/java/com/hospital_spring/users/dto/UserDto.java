@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Registered user")
 public class UserDto {
     @Schema(description = "id of the user", example = "1")
-    private Long id;
+    private Long _id;
     @Schema(description = "username of the user", example = "username325")
     private String username;
     @Schema(description = "workplace of the user", example = "surgery")
@@ -24,7 +24,7 @@ public class UserDto {
 
     public static UserDto from(User user) {
         return UserDto.builder()
-            .id(user.getId())
+            ._id(user.getId())
             .username(user.getUsername())
             .workplace(user.getWorkplace().name())
             .isNotLocked(user.isNotLocked())
