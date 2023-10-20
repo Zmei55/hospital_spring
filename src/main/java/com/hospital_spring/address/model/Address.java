@@ -26,9 +26,7 @@ public class Address {
     @NotNull
     private String city;
     @NotNull
-    private String postcode;
+    private int postcode;
     @NotNull
     private LocalDateTime createdAt;
-    @NotNull
-    private boolean isActive;
 }
