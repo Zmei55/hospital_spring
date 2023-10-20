@@ -1,7 +1,5 @@
 package com.hospital_spring.patients.controllers.api;
 
-import com.hospital_spring.patients.dto.FilterPatientDto;
-import com.hospital_spring.patients.dto.NewPatientDto;
 import com.hospital_spring.patients.dto.PatientDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -28,7 +26,16 @@ public interface PatientsApi {
                     schema = @Schema(implementation = PatientDto.class))})}
     )
     @PostMapping("/add")
-    ResponseEntity<PatientDto> addNew(@RequestBody NewPatientDto newPatientData);
+    ResponseEntity<PatientDto> addNew(
+        @RequestParam String firstName,
+        @RequestParam String lastName,
+        @RequestParam String birthDate,
+        @RequestParam int cardNumber,
+        @RequestParam String gender,
+        @RequestParam String phoneNumber,
+        @RequestParam String email,
+        @RequestParam String identityDocument
+    );
 
     @Operation(summary = "Get by id", description = "Get patient by id")
     @ApiResponses(value = {
@@ -48,7 +55,12 @@ public interface PatientsApi {
                     schema = @Schema(implementation = PatientDto.class))})}
     )
     @PostMapping(value = "/")
-    ResponseEntity<List<PatientDto>> getByFilter(@RequestBody FilterPatientDto filter);
+    ResponseEntity<List<PatientDto>> getByFilter(
+        @RequestParam String firstName,
+        @RequestParam String lastName,
+        @RequestParam String birthDate,
+        @RequestParam int cardNumber
+    );
 
     @Operation(summary = "Update", description = "Update patient data by id")
     @ApiResponses(value = {
@@ -60,7 +72,14 @@ public interface PatientsApi {
     @PutMapping("/{patient-id}")
     ResponseEntity<PatientDto> updateById(
         @PathVariable("patient-id") Long patientId,
-        @RequestBody NewPatientDto newPatientData
+        @RequestParam String firstName,
+        @RequestParam String lastName,
+        @RequestParam String birthDate,
+        @RequestParam int cardNumber,
+        @RequestParam String gender,
+        @RequestParam String phoneNumber,
+        @RequestParam String email,
+        @RequestParam String identityDocument
     );
 
     @Operation(summary = "Delete patient", description = "Delete patient by id")

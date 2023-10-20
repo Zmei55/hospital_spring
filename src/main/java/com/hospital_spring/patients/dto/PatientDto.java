@@ -34,8 +34,8 @@ public class PatientDto {
     private String email;
     @Schema(description = "Identity document of the patient", example = "Pass")
     private String identityDocument;
-//    @Schema(description = "Id of the address of the patient", example = "1")
-//    private Long addressId;
+    @Schema(description = "Id of the address of the patient", example = "1")
+    private Long addressId;
 
     public static PatientDto from(Patient patient) {
         return PatientDto.builder()
@@ -48,9 +48,9 @@ public class PatientDto {
             .phoneNumber(patient.getPhoneNumber())
             .email(patient.getEmail())
             .identityDocument(patient.getIdentityDocument())
-//            .addressId(!patient.getAddress().isEmpty()
-//                ? patient.getAddress().getId()
-//                : null)
+            .addressId(patient.getAddress() != null
+                ? patient.getAddress().getId()
+                : null)
             .build();
     }
 

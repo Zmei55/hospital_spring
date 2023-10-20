@@ -1,8 +1,6 @@
 package com.hospital_spring.patients.services.impl;
 
 import com.hospital_spring.shared.exceptions.NotFoundException;
-import com.hospital_spring.patients.dto.FilterPatientDto;
-import com.hospital_spring.patients.dto.NewPatientDto;
 import com.hospital_spring.patients.dto.PatientDto;
 import com.hospital_spring.patients.model.Patient;
 import com.hospital_spring.patients.repositories.PatientsRepository;
@@ -20,16 +18,25 @@ public class PatientsServiceImpl implements PatientsService {
     private final PatientsRepository patientsRepository;
 
     @Override
-    public PatientDto addNew(NewPatientDto newPatientData) {
+    public PatientDto addNew(
+        String firstName,
+        String lastName,
+        String birthDate,
+        int cardNumber,
+        String gender,
+        String phoneNumber,
+        String email,
+        String identityDocument
+    ) {
         Patient patient = Patient.builder()
-            .firstName(newPatientData.getFirstName())
-            .lastName(newPatientData.getLastName())
-            .birthDate(LocalDateTime.parse(newPatientData.getBirthDate(), DateTimeFormatter.ISO_DATE_TIME))
-            .cardNumber(newPatientData.getCardNumber())
-            .gender(Patient.Gender.valueOf(newPatientData.getGender()))
-            .phoneNumber(newPatientData.getPhoneNumber())
-            .email(newPatientData.getEmail())
-            .identityDocument(newPatientData.getIdentityDocument())
+            .firstName(firstName)
+            .lastName(lastName)
+            .birthDate(LocalDateTime.parse(birthDate, DateTimeFormatter.ISO_DATE_TIME))
+            .cardNumber(cardNumber)
+            .gender(Patient.Gender.valueOf(gender))
+            .phoneNumber(phoneNumber)
+            .email(email)
+            .identityDocument(identityDocument)
             .createdAt(LocalDateTime.now())
             .build();
 
@@ -49,32 +56,47 @@ public class PatientsServiceImpl implements PatientsService {
     }
 
     @Override
-    public List<PatientDto> getByFilter(FilterPatientDto filter) {
+    public List<PatientDto> getByFilter(
+        String firstName,
+        String lastName,
+        String birthDate,
+        int cardNumber
+    ) {
         List<Patient> patientList = patientsRepository.findAllByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrBirthDateOrCardNumber(
-            filter.getFirstName(),
-            filter.getLastName(),
-            filter.getBirthDate(),
-            filter.getCardNumber()
+            firstName,
+            lastName,
+            LocalDateTime.parse(birthDate, DateTimeFormatter.ISO_DATE_TIME),
+            cardNumber
         );
 
         return PatientDto.from(patientList);
     }
 
     @Override
-    public PatientDto updateById(Long patientId, NewPatientDto newPatientData) {
+    public PatientDto updateById(
+        Long patientId,
+        String firstName,
+        String lastName,
+        String birthDate,
+        int cardNumber,
+        String gender,
+        String phoneNumber,
+        String email,
+        String identityDocument
+    ) {
         Patient patient = patientsRepository.findById(patientId)
             .orElseThrow(
                 () -> new NotFoundException("Patient with id <" + patientId + "> not found")
             );
 
-        patient.setFirstName(newPatientData.getFirstName());
-        patient.setLastName(newPatientData.getLastName());
-        patient.setBirthDate(LocalDateTime.parse(newPatientData.getBirthDate(), DateTimeFormatter.ISO_DATE_TIME));
-        patient.setCardNumber(newPatientData.getCardNumber());
-        patient.setGender(Patient.Gender.valueOf(newPatientData.getGender()));
-        patient.setPhoneNumber(newPatientData.getPhoneNumber());
-        patient.setEmail(newPatientData.getEmail());
-        patient.setIdentityDocument(newPatientData.getIdentityDocument());
+        patient.setFirstName(firstName);
+        patient.setLastName(lastName);
+        patient.setBirthDate(LocalDateTime.parse(birthDate, DateTimeFormatter.ISO_DATE_TIME));
+        patient.setCardNumber(cardNumber);
+        patient.setGender(Patient.Gender.valueOf(gender));
+        patient.setPhoneNumber(phoneNumber);
+        patient.setEmail(email);
+        patient.setIdentityDocument(identityDocument);
 
         patientsRepository.save(patient);
 
