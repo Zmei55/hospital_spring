@@ -1,14 +1,11 @@
 package com.hospital_spring.users.services.impl;
 
-import com.hospital_spring.shared.dto.ResponseDto;
 import com.hospital_spring.shared.exceptions.UserIsPresentException;
-import com.hospital_spring.users.dto.UserDto;
+import com.hospital_spring.users.dto.ProfileDto;
 import com.hospital_spring.users.model.User;
 import com.hospital_spring.users.repositories.UsersRepository;
 import com.hospital_spring.users.services.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +18,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public ResponseEntity<ResponseDto> signUp(
+    public ProfileDto signUp(
         String username,
         String password,
         String firstName,
@@ -31,6 +28,7 @@ public class AuthServiceImpl implements AuthService {
         if (usersRepository.findByUsername(username).isPresent()) {
             throw new UserIsPresentException("User is present");
         }
+
         User user = User.builder()
             .username(username)
             .hashPassword(passwordEncoder.encode(password))
@@ -43,11 +41,6 @@ public class AuthServiceImpl implements AuthService {
             .build();
         usersRepository.save(user);
 
-        return ResponseEntity.status(HttpStatus.CREATED.value())
-            .body(ResponseDto.builder()
-                .message("Created")
-                .status(HttpStatus.CREATED.value())
-                .data(UserDto.from(user))
-                .build());
+        return ProfileDto.from(user);
     }
 }

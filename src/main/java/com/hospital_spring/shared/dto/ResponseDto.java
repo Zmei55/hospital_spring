@@ -25,7 +25,23 @@ public class ResponseDto {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime timestamp;
 
-    public static ResponseDto getResponseException(Exception exception, HttpStatus status) {
+    public static ResponseDto fromCreated(Object data) {
+        return ResponseDto.builder()
+            .message("Created")
+            .status(HttpStatus.CREATED.value())
+            .data(data)
+            .build();
+    }
+
+    public static ResponseDto fromSuccessful(Object data) {
+        return ResponseDto.builder()
+            .message("Successful")
+            .status(HttpStatus.OK.value())
+            .data(data)
+            .build();
+    }
+
+    public static ResponseDto fromException(Exception exception, HttpStatus status) {
         return ResponseDto.builder()
             .message(exception.getMessage())
             .status(status.value())

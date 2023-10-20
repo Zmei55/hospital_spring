@@ -17,7 +17,7 @@ public class RestExceptionHandler {
     public ResponseEntity<ResponseDto> handleNotFound(NotFoundException exception) {
         log.error(exception.toString(), exception); // выводит ошибки в лог
 
-        return new ResponseEntity<>(ResponseDto.getResponseException(exception, HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(ResponseDto.fromException(exception, HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
     }
 
     // Обрабатывает ошибки "UserIsPresentExceptions" (пользователь существует)
@@ -25,6 +25,6 @@ public class RestExceptionHandler {
     public ResponseEntity<ResponseDto> handleUserIsPresent(UserIsPresentException exception) {
         log.error(exception.toString(), exception);
 
-        return new ResponseEntity<>(ResponseDto.getResponseException(exception, HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ResponseDto.fromException(exception, HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
     }
 }
