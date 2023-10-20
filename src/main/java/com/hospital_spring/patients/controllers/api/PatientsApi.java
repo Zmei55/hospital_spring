@@ -28,7 +28,7 @@ public interface PatientsApi {
                     schema = @Schema(implementation = PatientDto.class))})}
     )
     @PostMapping("/add")
-    ResponseEntity<PatientDto> addNew(NewPatientDto newPatient);
+    ResponseEntity<PatientDto> addNew(@RequestBody NewPatientDto newPatientData);
 
     @Operation(summary = "Get by id", description = "Get patient by id")
     @ApiResponses(value = {
@@ -47,8 +47,8 @@ public interface PatientsApi {
                 @Content(mediaType = "application/json",
                     schema = @Schema(implementation = PatientDto.class))})}
     )
-    @PostMapping
-    ResponseEntity<List<PatientDto>> getByFilter(FilterPatientDto filter);
+    @PostMapping(value = "/")
+    ResponseEntity<List<PatientDto>> getByFilter(@RequestBody FilterPatientDto filter);
 
     @Operation(summary = "Update", description = "Update patient data by id")
     @ApiResponses(value = {

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -19,21 +20,18 @@ public class PatientsServiceImpl implements PatientsService {
     private final PatientsRepository patientsRepository;
 
     @Override
-    public PatientDto addNew(NewPatientDto newPatient) {
+    public PatientDto addNew(NewPatientDto newPatientData) {
         Patient patient = Patient.builder()
-            .firstName(newPatient.getFirstName())
-            .lastName(newPatient.getLastName())
-            .birthDate(newPatient.getBirthDate())
-            .cardNumber(newPatient.getCardNumber())
-            .gender(Patient.Gender.valueOf(newPatient.getGender()))
-            .phoneNumber(newPatient.getPhoneNumber())
-            .email(newPatient.getEmail())
-            .identityDocument(newPatient.getIdentityDocument())
-            .createdDate(LocalDateTime.now())
+            .firstName(newPatientData.getFirstName())
+            .lastName(newPatientData.getLastName())
+            .birthDate(LocalDateTime.parse(newPatientData.getBirthDate(), DateTimeFormatter.ISO_DATE_TIME))
+            .cardNumber(newPatientData.getCardNumber())
+            .gender(Patient.Gender.valueOf(newPatientData.getGender()))
+            .phoneNumber(newPatientData.getPhoneNumber())
+            .email(newPatientData.getEmail())
+            .identityDocument(newPatientData.getIdentityDocument())
+            .createdAt(LocalDateTime.now())
             .build();
-
-//        address.save(address);
-//        patient.setAddress(address);
 
         patientsRepository.save(patient);
 
@@ -52,7 +50,7 @@ public class PatientsServiceImpl implements PatientsService {
 
     @Override
     public List<PatientDto> getByFilter(FilterPatientDto filter) {
-        List<Patient> patientList = patientsRepository.findAllByFirstNameOrLastNameOrBirthDateOrCardNumber(
+        List<Patient> patientList = patientsRepository.findAllByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrBirthDateOrCardNumber(
             filter.getFirstName(),
             filter.getLastName(),
             filter.getBirthDate(),
@@ -71,7 +69,7 @@ public class PatientsServiceImpl implements PatientsService {
 
         patient.setFirstName(newPatientData.getFirstName());
         patient.setLastName(newPatientData.getLastName());
-        patient.setBirthDate(newPatientData.getBirthDate());
+        patient.setBirthDate(LocalDateTime.parse(newPatientData.getBirthDate(), DateTimeFormatter.ISO_DATE_TIME));
         patient.setCardNumber(newPatientData.getCardNumber());
         patient.setGender(Patient.Gender.valueOf(newPatientData.getGender()));
         patient.setPhoneNumber(newPatientData.getPhoneNumber());

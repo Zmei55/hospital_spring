@@ -17,9 +17,9 @@ public class PatientsController implements PatientsApi {
     private final PatientsService patientsService;
 
     @Override
-    public ResponseEntity<PatientDto> addNew(NewPatientDto newPatient) {
+    public ResponseEntity<PatientDto> addNew(NewPatientDto newPatientData) {
         return ResponseEntity.status(201)
-            .body(patientsService.addNew(newPatient));
+            .body(patientsService.addNew(newPatientData));
     }
 
     @Override

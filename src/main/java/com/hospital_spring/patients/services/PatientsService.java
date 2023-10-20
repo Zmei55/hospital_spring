@@ -7,7 +7,7 @@ import com.hospital_spring.patients.dto.PatientDto;
 import java.util.List;
 
 public interface PatientsService {
-    PatientDto addNew(NewPatientDto newPatient);
+    PatientDto addNew(NewPatientDto newPatientData);
 
     PatientDto getById(Long patientId);
 

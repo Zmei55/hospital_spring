@@ -39,7 +39,7 @@ public class AuthServiceImpl implements AuthService {
             .role(User.Role.USER)
             .workplace(User.Workplace.valueOf(workplace))
             .isNotLocked(true)
-            .createdDate(LocalDateTime.now())
+            .createdAt(LocalDateTime.now())
             .build();
         usersRepository.save(user);
 

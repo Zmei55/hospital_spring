@@ -1,6 +1,5 @@
 package com.hospital_spring.address.model;
 
-import com.hospital_spring.users.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

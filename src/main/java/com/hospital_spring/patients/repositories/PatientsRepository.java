@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PatientsRepository extends JpaRepository<Patient, Long> {
-    List<Patient> findAllByFirstNameOrLastNameOrBirthDateOrCardNumber(
+    List<Patient> findAllByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrBirthDateOrCardNumber(
         String firstName,
         String lastName,
         LocalDateTime birthDate,
