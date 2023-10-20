@@ -1,5 +1,6 @@
 package com.hospital_spring.patients.model;
 
+import com.hospital_spring.address.model.Address;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 @Builder
 @Table(name = "patients")
 public class Patient {
-    public enum Gender {männlich, weiblich, divers}
+    public enum Gender {MALE, FEMALE, DIVERSE}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +36,7 @@ public class Patient {
     private String email;
     private String identityDocument;
     @NotNull
-    private LocalDateTime createdDate;
-//    @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Address.class)
-//    private Address address;
+    private LocalDateTime createdAt;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Address.class)
+    private Address address;
 }
