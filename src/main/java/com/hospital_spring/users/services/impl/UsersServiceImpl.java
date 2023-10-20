@@ -3,7 +3,6 @@ package com.hospital_spring.users.services.impl;
 import com.hospital_spring.security.config.details.AuthenticatedUser;
 import com.hospital_spring.shared.exceptions.NotFoundException;
 import com.hospital_spring.users.dto.ProfileDto;
-import com.hospital_spring.users.dto.UserDto;
 import com.hospital_spring.users.dto.UserUpdateDto;
 import com.hospital_spring.users.model.User;
 import com.hospital_spring.users.repositories.UsersRepository;
@@ -29,13 +28,13 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public UserDto getUser(Long userId) {
+    public ProfileDto getUserById(Long userId) {
         User user = usersRepository.findById(userId)
             .orElseThrow(
                 () -> new NotFoundException("User with id <" + userId + "> not found")
             );
 
-        return UserDto.from(user);
+        return ProfileDto.from(user);
     }
 
     @Override
