@@ -9,7 +9,7 @@ public interface PatientsService {
         String firstName,
         String lastName,
         String birthDate,
-        int cardNumber,
+        String cardNumber,
         String gender,
         String phoneNumber,
         String email,
@@ -22,7 +22,7 @@ public interface PatientsService {
         String firstName,
         String lastName,
         String birthDate,
-        int cardNumber
+        String cardNumber
     );
 
     PatientDto updateById(
@@ -30,7 +30,7 @@ public interface PatientsService {
         String firstName,
         String lastName,
         String birthDate,
-        int cardNumber,
+        String cardNumber,
         String gender,
         String phoneNumber,
         String email,

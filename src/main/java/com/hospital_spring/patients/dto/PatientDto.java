@@ -23,7 +23,7 @@ public class PatientDto {
     @Schema(description = "Last name of the patient", example = "Smith")
     private String lastName;
     @Schema(description = "Birth date of the patient", example = "24.05.1974")
-    private LocalDateTime birthDate;
+    private String birthDate;
     @Schema(description = "Card number of the patient", example = "123456789")
     private int cardNumber;
     @Schema(description = "Gender of the patient", example = "männlich")

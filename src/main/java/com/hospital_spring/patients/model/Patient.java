@@ -27,7 +27,7 @@ public class Patient {
     @NotNull
     private String lastName;
     @NotNull
-    private LocalDateTime birthDate;
+    private String birthDate;
     @NotNull
     private int cardNumber;
     @Enumerated(value = EnumType.STRING)

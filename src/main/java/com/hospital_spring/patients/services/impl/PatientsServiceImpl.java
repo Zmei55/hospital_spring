@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -22,7 +21,7 @@ public class PatientsServiceImpl implements PatientsService {
         String firstName,
         String lastName,
         String birthDate,
-        int cardNumber,
+        String cardNumber,
         String gender,
         String phoneNumber,
         String email,
@@ -31,8 +30,8 @@ public class PatientsServiceImpl implements PatientsService {
         Patient patient = Patient.builder()
             .firstName(firstName)
             .lastName(lastName)
-            .birthDate(LocalDateTime.parse(birthDate, DateTimeFormatter.ISO_DATE_TIME))
-            .cardNumber(cardNumber)
+            .birthDate(birthDate)
+            .cardNumber(Integer.parseInt(cardNumber))
             .gender(Patient.Gender.valueOf(gender))
             .phoneNumber(phoneNumber)
             .email(email)
@@ -49,7 +48,7 @@ public class PatientsServiceImpl implements PatientsService {
     public PatientDto getById(Long patientId) {
         Patient patient = patientsRepository.findById(patientId)
             .orElseThrow(
-                ()->new NotFoundException("Patient with id <" + patientId + "> not found")
+                () -> new NotFoundException("Patient with id <" + patientId + "> not found")
             );
 
         return PatientDto.from(patient);
@@ -60,14 +59,21 @@ public class PatientsServiceImpl implements PatientsService {
         String firstName,
         String lastName,
         String birthDate,
-        int cardNumber
+        String cardNumber
     ) {
+        firstName = !firstName.isEmpty() ? firstName : null;
+        lastName = !lastName.isEmpty() ? lastName : null;
+        birthDate = !birthDate.isEmpty() ? birthDate : null;
+        int number = !cardNumber.isEmpty() ? Integer.parseInt(cardNumber) : 0;
+
         List<Patient> patientList = patientsRepository.findAllByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrBirthDateOrCardNumber(
             firstName,
             lastName,
-            LocalDateTime.parse(birthDate, DateTimeFormatter.ISO_DATE_TIME),
-            cardNumber
+            birthDate,
+            number
         );
+
+        System.out.println(patientList + " list +++++++++++++++++++++++++++++++++++");
 
         return PatientDto.from(patientList);
     }
@@ -78,7 +84,7 @@ public class PatientsServiceImpl implements PatientsService {
         String firstName,
         String lastName,
         String birthDate,
-        int cardNumber,
+        String cardNumber,
         String gender,
         String phoneNumber,
         String email,
@@ -91,8 +97,10 @@ public class PatientsServiceImpl implements PatientsService {
 
         patient.setFirstName(firstName);
         patient.setLastName(lastName);
-        patient.setBirthDate(LocalDateTime.parse(birthDate, DateTimeFormatter.ISO_DATE_TIME));
-        patient.setCardNumber(cardNumber);
+        if (!birthDate.isEmpty()) {
+            patient.setBirthDate(birthDate);
+        }
+        patient.setCardNumber(Integer.parseInt(cardNumber));
         patient.setGender(Patient.Gender.valueOf(gender));
         patient.setPhoneNumber(phoneNumber);
         patient.setEmail(email);
@@ -105,7 +113,7 @@ public class PatientsServiceImpl implements PatientsService {
 
     @Override
     public void deleteById(Long patientId) {
-        if(patientsRepository.existsById(patientId)) {
+        if (patientsRepository.existsById(patientId)) {
             patientsRepository.deleteById(patientId);
         } else {
             throw new NotFoundException("Patient with id <" + patientId + "> not found");
