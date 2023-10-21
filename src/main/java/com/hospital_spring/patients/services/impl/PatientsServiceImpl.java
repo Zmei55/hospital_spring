@@ -73,8 +73,6 @@ public class PatientsServiceImpl implements PatientsService {
             number
         );
 
-        System.out.println(patientList + " list +++++++++++++++++++++++++++++++++++");
-
         return PatientDto.from(patientList);
     }
 

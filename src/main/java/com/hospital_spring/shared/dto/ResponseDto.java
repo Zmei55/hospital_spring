@@ -8,8 +8,6 @@ import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Builder
@@ -41,12 +39,6 @@ public class ResponseDto {
             .status(HttpStatus.OK.value())
             .data(data)
             .build();
-    }
-
-    public static List<ResponseDto> fromSuccessful(List<Object> dataList) {
-        return dataList.stream()
-            .map(ResponseDto::fromSuccessful)
-            .collect(Collectors.toList());
     }
 
     public static ResponseDto fromException(Exception exception, HttpStatus status) {
