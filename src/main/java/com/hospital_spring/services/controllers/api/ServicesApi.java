@@ -1,4 +1,4 @@
-package com.hospital_spring.laboratories.controllers.api;
+package com.hospital_spring.services.controllers.api;
 
 import com.hospital_spring.shared.dto.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,58 +12,62 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Tags(value = {
-    @Tag(name = "Laboratories")
+    @Tag(name = "Services")
 })
-@RequestMapping("/api/labors")
-public interface LaboratoriesApi {
-    @Operation(summary = "Add", description = "Add new laboratory")
+@RequestMapping("/api/services")
+public interface ServicesApi {
+    @Operation(summary = "Add", description = "Add new service")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "New laboratory",
+        @ApiResponse(responseCode = "201", description = "New service",
             content = {
                 @Content(mediaType = "application/json",
                     schema = @Schema(implementation = ResponseDto.class))})}
     )
     @PostMapping("/add")
-    ResponseEntity<ResponseDto> addNew(@RequestParam String name);
-
-    @Operation(summary = "Get by id", description = "Get laboratory by id")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "laboratory by id",
-            content = {
-                @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ResponseDto.class))})}
-    )
-    @GetMapping("/{labor-id}")
-    ResponseEntity<ResponseDto> getById(@PathVariable("labor-id") Long laborId);
-
-    @Operation(summary = "Get all", description = "Get all is active")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "laboratories is active",
-            content = {
-                @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ResponseDto.class))})}
-    )
-    @GetMapping("/")
-    ResponseEntity<ResponseDto> getAllActive();
-
-    @Operation(summary = "Update", description = "Update laboratory data by id")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Update laboratory data by id",
-            content = {
-                @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ResponseDto.class))})}
-    )
-    @PutMapping("/{labor-id}")
-    ResponseEntity<ResponseDto> updateById(
-        @PathVariable("labor-id") Long laborId,
+    ResponseEntity<ResponseDto> addNew(
         @RequestParam String name,
+        @RequestParam String code
+    );
+
+    @Operation(summary = "Get by id", description = "Get service by id")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "service by id",
+            content = {
+                @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ResponseDto.class))})}
+    )
+    @GetMapping("/{service-id}")
+    ResponseEntity<ResponseDto> getById(@PathVariable("service-id") Long serviceId);
+
+    @Operation(summary = "Get all", description = "Get all services is active")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "services is active",
+            content = {
+                @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ResponseDto.class))})}
+    )
+    @PostMapping("/")
+    ResponseEntity<ResponseDto> getAllActiveByFilter(@RequestParam String filter);
+
+    @Operation(summary = "Update", description = "Update service data by id")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Update service data by id",
+            content = {
+                @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ResponseDto.class))})}
+    )
+    @PutMapping("/{service-id}")
+    ResponseEntity<ResponseDto> updateById(
+        @PathVariable("service-id") Long serviceId,
+        @RequestParam String name,
+        @RequestParam String code,
         @RequestParam boolean isActive
     );
 
-    @Operation(summary = "Delete laboratory", description = "Delete laboratory by id")
+    @Operation(summary = "Delete service", description = "Delete service by id")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Delete laboratory by id")}
+        @ApiResponse(responseCode = "200", description = "Delete service by id")}
     )
-    @DeleteMapping("/{labor-id}")
-    void deleteById(@PathVariable("labor-id") Long laborId);
+    @DeleteMapping("/{service-id}")
+    void deleteById(@PathVariable("service-id") Long serviceId);
 }

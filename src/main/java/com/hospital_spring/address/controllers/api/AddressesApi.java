@@ -1,7 +1,6 @@
 package com.hospital_spring.address.controllers.api;
 
 import com.hospital_spring.shared.dto.ResponseDto;
-import com.hospital_spring.shared.exceptions.NotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -38,7 +37,7 @@ public interface AddressesApi {
             @Content(mediaType = "application/json",
             schema = @Schema(implementation = ResponseDto.class))})})
     @GetMapping("/{address-id}")
-    ResponseEntity<ResponseDto> getById(@PathVariable("address-id") Long addressId) throws NotFoundException;
+    ResponseEntity<ResponseDto> getById(@PathVariable("address-id") Long addressId);
 
     @Operation(summary = "Update", description = "Update address by id")
     @ApiResponses(value = {
@@ -53,7 +52,7 @@ public interface AddressesApi {
         @RequestParam int houseNumber,
         @RequestParam String city,
         @RequestParam int postcode
-    ) throws NotFoundException;
+    );
 
     @Operation(summary = "Delete", description = "Delete address by id")
     @ApiResponses(value = {
@@ -62,5 +61,5 @@ public interface AddressesApi {
             @Content(mediaType = "application/json",
             schema = @Schema(implementation = ResponseDto.class))})})
     @DeleteMapping("/{address-id}")
-    void deleteById(@PathVariable("address-id") Long addressId) throws NotFoundException;
+    void deleteById(@PathVariable("address-id") Long addressId);
 }

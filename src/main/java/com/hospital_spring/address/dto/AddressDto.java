@@ -24,8 +24,6 @@ public class AddressDto {
     private String city;
     @Schema(description = "Postal code", example = "12345")
     private int postcode;
-    @Schema(description = "Creation date")
-    private LocalDateTime createdAt;
 
     public static AddressDto from(Address address) {
         return AddressDto.builder()

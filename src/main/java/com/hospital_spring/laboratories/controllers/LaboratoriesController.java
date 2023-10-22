@@ -35,9 +35,9 @@ public class LaboratoriesController implements LaboratoriesApi {
     }
 
     @Override
-    public ResponseEntity<ResponseDto> updateById(Long patientId, String name, boolean isActive) {
+    public ResponseEntity<ResponseDto> updateById(Long laborId, String name, boolean isActive) {
         return ResponseEntity.ok(ResponseDto.fromSuccessful(
-            laboratoriesService.updateById(patientId, name, isActive)
+            laboratoriesService.updateById(laborId, name, isActive)
         ));
     }
 
