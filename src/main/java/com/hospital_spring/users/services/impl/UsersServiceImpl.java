@@ -8,10 +8,8 @@ import com.hospital_spring.users.model.User;
 import com.hospital_spring.users.repositories.UsersRepository;
 import com.hospital_spring.users.services.UsersService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UsersServiceImpl implements UsersService {

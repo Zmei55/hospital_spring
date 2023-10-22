@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 public class PatientDto {
-    @Schema(description = "id of the patient", example = "1")
+    @Schema(description = "Id of the patient", example = "1")
     private Long _id;
     @Schema(description = "First name of the patient", example = "John")
     private String firstName;
