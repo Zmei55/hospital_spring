@@ -8,6 +8,8 @@ import com.hospital_spring.shared.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class AddressesServiceImpl implements AddressesService {
@@ -25,6 +27,7 @@ public class AddressesServiceImpl implements AddressesService {
             .houseNumber(houseNumber)
             .city(city)
             .postcode(postcode)
+            .createdAt(LocalDateTime.now())
             .build();
         addressesRepository.save(address);
 
