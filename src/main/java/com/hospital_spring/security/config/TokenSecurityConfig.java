@@ -35,7 +35,8 @@ public class TokenSecurityConfig {
     ) throws Exception {
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // отключает сессии (куки)
         httpSecurity.csrf().disable();
-        httpSecurity.cors().disable();
+        httpSecurity.headers().frameOptions().disable();
+        httpSecurity.cors();
 
         httpSecurity.authorizeRequests()
             .antMatchers("/swagger-ui/**").permitAll()

@@ -72,7 +72,7 @@ public class OpenApiConfig {
             "200", new ApiResponse().content(
                 new Content().addMediaType(
                     "application/json", new MediaType().schema(
-                        new Schema<>().$ref("Tokens")
+                        new Schema<>().$ref("Token")
                     )))
         );
     }
@@ -104,11 +104,11 @@ public class OpenApiConfig {
             .addProperty("username", new Schema<>().type("string"))
             .addProperty("password", new Schema<>().type("string"));
 
-        Schema<?> tokens = new Schema<>()
+        Schema<?> token = new Schema<>()
             .type("object")
-            .description("Access and refresh tokens")
-            .addProperty("accessToken", new Schema<>().type("string"))
-            .addProperty("refreshToken", new Schema<>().type("string"));
+            .description("Token")
+            .addProperty("token", new Schema<>().type("string"))
+            ;
 
         SecurityScheme securityScheme = new SecurityScheme()
             .name(BEARER_AUTH)
@@ -118,7 +118,7 @@ public class OpenApiConfig {
 
         return new Components()
             .addSchemas("UsernameAndPassword", usernameAndPassword)
-            .addSchemas("Tokens", tokens)
+            .addSchemas("Token", token)
             .addSecuritySchemes(BEARER_AUTH, securityScheme);
     }
 }

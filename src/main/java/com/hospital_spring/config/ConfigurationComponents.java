@@ -22,8 +22,10 @@ public class ConfigurationComponents {
                 registry.addMapping("/**")
                     .allowedOrigins("http://localhost:3000")
                     .allowCredentials(true)
-                    .allowedMethods("HEAD","GET","POST","PUT","DELETE","PATCH")
-//                    .allowedHeaders("*")
+                    .allowedMethods("HEAD","GET","POST","PUT","DELETE","PATCH","OPTIONS")
+                    .maxAge(3600)
+                    .allowedHeaders("*")
+                    .exposedHeaders("*")
                 ;
             }
         };

@@ -25,8 +25,8 @@ import java.util.Date;
 
 @Component
 public class JwtUtilAuth0Impl implements JwtUtil {
-    private static final long ACCESS_TOKEN_EXPIRES_TIME = 60 * 1000; // one minute
-//    private static final long REFRESH_TOKEN_EXPIRES_TIME = 3 * 60 * 1000; // three minutes
+//    private static final long ACCESS_TOKEN_EXPIRES_TIME = 60 * 1000; // one minute
+    private static final long ACCESS_TOKEN_EXPIRES_TIME = 20 * 60 * 1000; // three minutes
 
     @Value("${jwt.secret}")
     private String secret;

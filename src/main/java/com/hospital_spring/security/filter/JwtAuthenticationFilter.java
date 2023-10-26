@@ -5,6 +5,7 @@ import com.hospital_spring.security.config.details.AuthenticatedUser;
 import com.hospital_spring.security.utils.JwtUtil;
 import com.hospital_spring.shared.dto.ResponseDto;
 import com.hospital_spring.users.dto.ProfileDto;
+import com.hospital_spring.users.dto.UserAndTokenResponseDto;
 import com.hospital_spring.users.model.User;
 import com.hospital_spring.users.repositories.UsersRepository;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -65,7 +66,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         ResponseDto responseDto = ResponseDto.builder()
             .message("Successful Authentication")
             .status(200)
-            .data(ProfileDto.from(user))
+//            .data(ProfileDto.from(user))
+            .data(UserAndTokenResponseDto.from(user, token))
             .build();
 
         objectMapper.writeValue(response.getOutputStream(), responseDto);
