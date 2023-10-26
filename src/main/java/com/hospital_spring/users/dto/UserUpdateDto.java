@@ -12,12 +12,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @Schema(description = "Update user")
 public class UserUpdateDto {
-    @Schema(description = "firstName of the user", example = "John")
-    private String firstName;
-    @Schema(description = "lastName of the user", example = "Smith")
-    private String lastName;
+    @Schema(description = "Name of the user", example = "John")
+    private String name;
     @Schema(description = "workplace of the user", example = "surgery")
     private String workplace;
+    @Schema(description = "position of work")
+    private String position;
     @Schema(description = "user is not locked", example = "true")
     private boolean isNotLocked;
 }

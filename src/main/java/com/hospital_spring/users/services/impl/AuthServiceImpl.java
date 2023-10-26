@@ -21,9 +21,9 @@ public class AuthServiceImpl implements AuthService {
     public ProfileDto signUp(
         String username,
         String password,
-        String firstName,
-        String lastName,
-        String workplace
+        String name,
+        String workplace,
+        String position
     ) throws UserIsPresentException {
         if (usersRepository.findByUsername(username).isPresent()) {
             throw new UserIsPresentException("User is present");
@@ -32,10 +32,10 @@ public class AuthServiceImpl implements AuthService {
         User user = User.builder()
             .username(username)
             .hashPassword(passwordEncoder.encode(password))
-            .firstName(firstName)
-            .lastName(lastName)
+            .name(name)
             .role(User.Role.USER)
             .workplace(User.Workplace.valueOf(workplace))
+            .position(position)
             .isNotLocked(true)
             .createdAt(LocalDateTime.now())
             .build();

@@ -1,7 +1,6 @@
 package com.hospital_spring.users.controllers.api;
 
 import com.hospital_spring.shared.dto.ResponseDto;
-import com.hospital_spring.shared.exceptions.UserIsPresentException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -32,8 +31,8 @@ public interface AuthApi {
     ResponseEntity<ResponseDto> signUp(
         @RequestParam String username,
         @RequestParam String password,
-        @RequestParam String firstName,
-        @RequestParam String lastName,
-        @RequestParam String workplace
-    ) throws UserIsPresentException;
+        @RequestParam String name,
+        @RequestParam String workplace,
+        @RequestParam String position
+    );
 }

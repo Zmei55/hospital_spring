@@ -19,6 +19,8 @@ public class UserDto {
     private String username;
     @Schema(description = "workplace of the user", example = "surgery")
     private String workplace;
+    @Schema(description = "position of work")
+    private String position;
     @Schema(description = "user is not locked", example = "true")
     private boolean isNotLocked;
 
@@ -27,6 +29,7 @@ public class UserDto {
             ._id(user.getId())
             .username(user.getUsername())
             .workplace(user.getWorkplace().name())
+            .position(user.getPosition())
             .isNotLocked(user.isNotLocked())
             .build();
     }

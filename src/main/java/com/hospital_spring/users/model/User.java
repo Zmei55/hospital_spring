@@ -25,9 +25,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    private String firstName;
-    @NotNull
-    private String lastName;
+    private String name;
     @NotNull
     private String username;
     @NotNull
@@ -39,6 +37,8 @@ public class User {
     @NotNull
     @Enumerated(value = EnumType.STRING)
     private Workplace workplace;
+    @NotNull
+    private String position;
     @NotNull
     private LocalDateTime createdAt;
     @NotNull

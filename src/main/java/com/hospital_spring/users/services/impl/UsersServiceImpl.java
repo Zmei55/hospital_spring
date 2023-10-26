@@ -42,8 +42,7 @@ public class UsersServiceImpl implements UsersService {
                 () -> new NotFoundException("User with id <" + userId + "not found")
             );
 
-        user.setFirstName(updatedUser.getFirstName());
-        user.setLastName(updatedUser.getLastName());
+        user.setName(updatedUser.getName());
         user.setWorkplace(User.Workplace.valueOf(updatedUser.getWorkplace()));
         user.setNotLocked(updatedUser.isNotLocked());
 
