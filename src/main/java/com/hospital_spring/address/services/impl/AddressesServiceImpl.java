@@ -1,6 +1,7 @@
 package com.hospital_spring.address.services.impl;
 
 import com.hospital_spring.address.dto.AddressDto;
+import com.hospital_spring.address.dto.NewAddressDto;
 import com.hospital_spring.address.model.Address;
 import com.hospital_spring.address.repositories.AddressesRepository;
 import com.hospital_spring.address.services.AddressesService;
@@ -16,17 +17,12 @@ public class AddressesServiceImpl implements AddressesService {
     private final AddressesRepository addressesRepository;
 
     @Override
-    public AddressDto addNew(
-        String street,
-        int houseNumber,
-        String city,
-        int postcode
-    ) {
+    public AddressDto addNew(NewAddressDto newAddress) {
         Address address = Address.builder()
-            .street(street)
-            .houseNumber(houseNumber)
-            .city(city)
-            .postcode(postcode)
+            .street(newAddress.getStreet())
+            .houseNumber(newAddress.getHouseNumber())
+            .city(newAddress.getCity())
+            .postcode(newAddress.getPostcode())
             .createdAt(LocalDateTime.now())
             .build();
         addressesRepository.save(address);
@@ -45,22 +41,16 @@ public class AddressesServiceImpl implements AddressesService {
     }
 
     @Override
-    public AddressDto updateById(
-        Long addressId,
-        String street,
-        int houseNumber,
-        String city,
-        int postcode
-    ) {
+    public AddressDto updateById(Long addressId, NewAddressDto newAddress) {
         Address address = addressesRepository.findById(addressId)
             .orElseThrow(
                 () -> new NotFoundException("Address with id <" + addressId + "> not found")
             );
 
-        address.setStreet(street);
-        address.setHouseNumber(houseNumber);
-        address.setCity(city);
-        address.setPostcode(postcode);
+        address.setStreet(newAddress.getStreet());
+        address.setHouseNumber(newAddress.getHouseNumber());
+        address.setCity(newAddress.getCity());
+        address.setPostcode(newAddress.getPostcode());
 
         addressesRepository.save(address);
 

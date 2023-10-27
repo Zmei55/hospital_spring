@@ -1,5 +1,6 @@
 package com.hospital_spring.address.controllers.api;
 
+import com.hospital_spring.address.dto.NewAddressDto;
 import com.hospital_spring.shared.dto.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -23,12 +24,7 @@ public interface AddressesApi {
                 @Content(mediaType = "application/json",
                     schema = @Schema(implementation = ResponseDto.class))})})
     @PostMapping("/add")
-    ResponseEntity<ResponseDto> addNew(
-        @RequestParam String street,
-        @RequestParam int houseNumber,
-        @RequestParam String city,
-        @RequestParam int postcode
-    );
+    ResponseEntity<ResponseDto> addNew(@RequestBody NewAddressDto newAddress);
 
     @Operation(summary = "Get by id", description = "Get address by id")
     @ApiResponses(value = {
@@ -46,13 +42,7 @@ public interface AddressesApi {
             @Content(mediaType = "application/json",
             schema = @Schema(implementation = ResponseDto.class))})})
     @PutMapping("/{address-id}")
-    ResponseEntity<ResponseDto> updateById(
-        @PathVariable("address-id") Long addressId,
-        @RequestParam String street,
-        @RequestParam int houseNumber,
-        @RequestParam String city,
-        @RequestParam int postcode
-    );
+    ResponseEntity<ResponseDto> updateById(@PathVariable("address-id") Long addressId, @RequestBody NewAddressDto newAddress);
 
     @Operation(summary = "Delete", description = "Delete address by id")
     @ApiResponses(value = {

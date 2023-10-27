@@ -1,25 +1,14 @@
 package com.hospital_spring.address.services;
 
 import com.hospital_spring.address.dto.AddressDto;
-import com.hospital_spring.shared.exceptions.NotFoundException;
+import com.hospital_spring.address.dto.NewAddressDto;
 
 public interface AddressesService {
-    AddressDto addNew(
-        String street,
-        int houseNumber,
-        String city,
-        int postcode
-    );
+    AddressDto addNew(NewAddressDto newAddress);
 
     AddressDto getById(Long addressId);
 
-    AddressDto updateById(
-        Long addressId,
-        String street,
-        int houseNumber,
-        String city,
-        int postcode
-    ) throws NotFoundException;
+    AddressDto updateById(Long addressId, NewAddressDto newAddress);
 
     void deleteById(Long addressId);
 }
