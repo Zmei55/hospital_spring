@@ -1,6 +1,8 @@
 package com.hospital_spring.patients.controllers;
 
 import com.hospital_spring.patients.controllers.api.PatientsApi;
+import com.hospital_spring.patients.dto.NewPatientDto;
+import com.hospital_spring.patients.dto.PatientFilterDto;
 import com.hospital_spring.patients.services.PatientsService;
 import com.hospital_spring.shared.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -13,28 +15,10 @@ public class PatientsController implements PatientsApi {
     private final PatientsService patientsService;
 
     @Override
-    public ResponseEntity<ResponseDto> addNew(
-        String firstName,
-        String lastName,
-        String birthDate,
-        String cardNumber,
-        String gender,
-        String phoneNumber,
-        String email,
-        String identityDocument
-    ) {
+    public ResponseEntity<ResponseDto> addNew(NewPatientDto newPatient) {
         return ResponseEntity.status(201)
             .body(ResponseDto.fromCreated(
-                patientsService.addNew(
-                    firstName,
-                    lastName,
-                    birthDate,
-                    cardNumber,
-                    gender,
-                    phoneNumber,
-                    email,
-                    identityDocument
-                )));
+                patientsService.addNew(newPatient)));
     }
 
     @Override
@@ -45,47 +29,17 @@ public class PatientsController implements PatientsApi {
     }
 
     @Override
-    public ResponseEntity<ResponseDto> getByFilter(
-        String firstName,
-        String lastName,
-        String birthDate,
-        String cardNumber
-    ) {
+    public ResponseEntity<ResponseDto> getByFilter(PatientFilterDto filter) {
         return ResponseEntity.ok(
             ResponseDto.fromSuccessful(
-                patientsService.getByFilter(
-                    firstName,
-                    lastName,
-                    birthDate,
-                    cardNumber
-                )));
+                patientsService.getByFilter(filter)));
     }
 
     @Override
-    public ResponseEntity<ResponseDto> updateById(
-        Long patientId,
-        String firstName,
-        String lastName,
-        String birthDate,
-        String cardNumber,
-        String gender,
-        String phoneNumber,
-        String email,
-        String identityDocument
-    ) {
+    public ResponseEntity<ResponseDto> updateById(Long patientId, NewPatientDto newPatient) {
         return ResponseEntity.ok(
             ResponseDto.fromSuccessful(
-                patientsService.updateById(
-                    patientId,
-                    firstName,
-                    lastName,
-                    birthDate,
-                    cardNumber,
-                    gender,
-                    phoneNumber,
-                    email,
-                    identityDocument
-                )));
+                patientsService.updateById(patientId, newPatient)));
     }
 
     @Override

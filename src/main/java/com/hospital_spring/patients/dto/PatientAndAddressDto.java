@@ -1,5 +1,7 @@
 package com.hospital_spring.patients.dto;
 
+import com.hospital_spring.address.dto.AddressDto;
+import com.hospital_spring.address.model.Address;
 import com.hospital_spring.patients.model.Patient;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -7,14 +9,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class PatientDto {
+public class PatientAndAddressDto {
     @Schema(description = "Id of the patient", example = "1")
     private Long _id;
     @Schema(description = "Name of the patient", example = "John Smith")
@@ -31,11 +30,11 @@ public class PatientDto {
     private String email;
     @Schema(description = "Identity document of the patient", example = "Pass")
     private String identityDocument;
-    @Schema(description = "Id of the address of the patient", example = "1")
-    private Long addressId;
+    @Schema(description = "Address of the patient", example = "1")
+    private AddressDto address;
 
-    public static PatientDto from(Patient patient) {
-        return PatientDto.builder()
+    public static PatientAndAddressDto from(Patient patient, Address address) {
+        return PatientAndAddressDto.builder()
             ._id(patient.getId())
             .name(patient.getName())
             .birthDate(patient.getBirthDate())
@@ -44,15 +43,7 @@ public class PatientDto {
             .phoneNumber(patient.getPhoneNumber())
             .email(patient.getEmail())
             .identityDocument(patient.getIdentityDocument())
-            .addressId(patient.getAddress() != null
-                ? patient.getAddress().getId()
-                : null)
+            .address(AddressDto.from(address))
             .build();
-    }
-
-    public static List<PatientDto> from(List<Patient> patientList) {
-        return patientList.stream()
-            .map(PatientDto::from)
-            .collect(Collectors.toList());
     }
 }

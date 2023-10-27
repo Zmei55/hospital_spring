@@ -23,9 +23,7 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    private String firstName;
-    @NotNull
-    private String lastName;
+    private String name;
     @NotNull
     private String birthDate;
     @NotNull
@@ -37,6 +35,6 @@ public class Patient {
     private String identityDocument;
     @NotNull
     private LocalDateTime createdAt;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Address.class)
+    @OneToOne(cascade = CascadeType.ALL, targetEntity = Address.class)
     private Address address;
 }

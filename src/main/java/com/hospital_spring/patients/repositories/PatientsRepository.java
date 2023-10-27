@@ -6,9 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface PatientsRepository extends JpaRepository<Patient, Long> {
-    List<Patient> findAllByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrBirthDateOrCardNumber(
-        String firstName,
-        String lastName,
+    List<Patient> findAllByNameContainingIgnoreCaseOrBirthDateOrCardNumber(
+        String name,
         String birthDate,
         int cardNumber
     );

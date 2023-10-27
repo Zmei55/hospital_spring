@@ -1,5 +1,10 @@
 package com.hospital_spring.patients.services.impl;
 
+import com.hospital_spring.address.model.Address;
+import com.hospital_spring.address.repositories.AddressesRepository;
+import com.hospital_spring.patients.dto.NewPatientDto;
+import com.hospital_spring.patients.dto.PatientAndAddressDto;
+import com.hospital_spring.patients.dto.PatientFilterDto;
 import com.hospital_spring.shared.exceptions.NotFoundException;
 import com.hospital_spring.patients.dto.PatientDto;
 import com.hospital_spring.patients.model.Patient;
@@ -15,27 +20,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PatientsServiceImpl implements PatientsService {
     private final PatientsRepository patientsRepository;
+    private final AddressesRepository addressesRepository;
 
     @Override
-    public PatientDto addNew(
-        String firstName,
-        String lastName,
-        String birthDate,
-        String cardNumber,
-        String gender,
-        String phoneNumber,
-        String email,
-        String identityDocument
-    ) {
+    public PatientDto addNew(NewPatientDto newPatient) {
+        Address address = addressesRepository.findById(newPatient.getAddressId()).orElseThrow(
+            () -> new NotFoundException("Address with id<" + newPatient.getAddressId() + "> not found")
+        );
+
         Patient patient = Patient.builder()
-            .firstName(firstName)
-            .lastName(lastName)
-            .birthDate(birthDate)
-            .cardNumber(Integer.parseInt(cardNumber))
-            .gender(Patient.Gender.valueOf(gender))
-            .phoneNumber(phoneNumber)
-            .email(email)
-            .identityDocument(identityDocument)
+            .name(newPatient.getName())
+            .birthDate(newPatient.getBirthDate())
+            .cardNumber(newPatient.getCardNumber())
+            .gender(Patient.Gender.valueOf(newPatient.getGender()))
+            .phoneNumber(newPatient.getPhoneNumber())
+            .email(newPatient.getEmail())
+            .identityDocument(newPatient.getIdentityDocument())
+            .address(address)
             .createdAt(LocalDateTime.now())
             .build();
 
@@ -45,30 +46,27 @@ public class PatientsServiceImpl implements PatientsService {
     }
 
     @Override
-    public PatientDto getById(Long patientId) {
+    public PatientAndAddressDto getById(Long patientId) {
         Patient patient = patientsRepository.findById(patientId)
             .orElseThrow(
                 () -> new NotFoundException("Patient with id <" + patientId + "> not found")
             );
 
-        return PatientDto.from(patient);
+        Address address = addressesRepository.findById(patient.getAddress().getId()).orElseThrow(
+            () -> new NotFoundException("Address with id<" + patient.getAddress().getId() + "> not found")
+        );
+
+        return PatientAndAddressDto.from(patient, address);
     }
 
     @Override
-    public List<PatientDto> getByFilter(
-        String firstName,
-        String lastName,
-        String birthDate,
-        String cardNumber
-    ) {
-        firstName = !firstName.isEmpty() ? firstName : null;
-        lastName = !lastName.isEmpty() ? lastName : null;
-        birthDate = !birthDate.isEmpty() ? birthDate : null;
-        int number = !cardNumber.isEmpty() ? Integer.parseInt(cardNumber) : 0;
+    public List<PatientDto> getByFilter(PatientFilterDto filter) {
+        String name = !filter.getName().isEmpty() ? filter.getName() : null;
+        String birthDate = !filter.getBirthDate().isEmpty() ? filter.getBirthDate() : null;
+        int number = filter.getCardNumber() != 0 ? filter.getCardNumber() : 0;
 
-        List<Patient> patientList = patientsRepository.findAllByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrBirthDateOrCardNumber(
-            firstName,
-            lastName,
+        List<Patient> patientList = patientsRepository.findAllByNameContainingIgnoreCaseOrBirthDateOrCardNumber(
+            name,
             birthDate,
             number
         );
@@ -77,32 +75,21 @@ public class PatientsServiceImpl implements PatientsService {
     }
 
     @Override
-    public PatientDto updateById(
-        Long patientId,
-        String firstName,
-        String lastName,
-        String birthDate,
-        String cardNumber,
-        String gender,
-        String phoneNumber,
-        String email,
-        String identityDocument
-    ) {
+    public PatientDto updateById(Long patientId, NewPatientDto newPatient) {
         Patient patient = patientsRepository.findById(patientId)
             .orElseThrow(
                 () -> new NotFoundException("Patient with id <" + patientId + "> not found")
             );
 
-        patient.setFirstName(firstName);
-        patient.setLastName(lastName);
-        if (!birthDate.isEmpty()) {
-            patient.setBirthDate(birthDate);
+        patient.setName(newPatient.getName());
+        if (!newPatient.getBirthDate().isEmpty()) {
+            patient.setBirthDate(newPatient.getBirthDate());
         }
-        patient.setCardNumber(Integer.parseInt(cardNumber));
-        patient.setGender(Patient.Gender.valueOf(gender));
-        patient.setPhoneNumber(phoneNumber);
-        patient.setEmail(email);
-        patient.setIdentityDocument(identityDocument);
+        patient.setCardNumber(newPatient.getCardNumber());
+        patient.setGender(Patient.Gender.valueOf(newPatient.getGender()));
+        patient.setPhoneNumber(newPatient.getPhoneNumber());
+        patient.setEmail(newPatient.getEmail());
+        patient.setIdentityDocument(newPatient.getIdentityDocument());
 
         patientsRepository.save(patient);
 

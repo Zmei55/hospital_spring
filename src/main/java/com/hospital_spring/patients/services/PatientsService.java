@@ -1,41 +1,20 @@
 package com.hospital_spring.patients.services;
 
+import com.hospital_spring.patients.dto.NewPatientDto;
+import com.hospital_spring.patients.dto.PatientAndAddressDto;
 import com.hospital_spring.patients.dto.PatientDto;
+import com.hospital_spring.patients.dto.PatientFilterDto;
 
 import java.util.List;
 
 public interface PatientsService {
-    PatientDto addNew(
-        String firstName,
-        String lastName,
-        String birthDate,
-        String cardNumber,
-        String gender,
-        String phoneNumber,
-        String email,
-        String identityDocument
-    );
+    PatientDto addNew(NewPatientDto newPatient);
 
-    PatientDto getById(Long patientId);
+    PatientAndAddressDto getById(Long patientId);
 
-    List<PatientDto> getByFilter(
-        String firstName,
-        String lastName,
-        String birthDate,
-        String cardNumber
-    );
+    List<PatientDto> getByFilter(PatientFilterDto filter);
 
-    PatientDto updateById(
-        Long patientId,
-        String firstName,
-        String lastName,
-        String birthDate,
-        String cardNumber,
-        String gender,
-        String phoneNumber,
-        String email,
-        String identityDocument
-    );
+    PatientDto updateById(Long patientId, NewPatientDto newPatient);
 
     void deleteById(Long patientId);
 }
