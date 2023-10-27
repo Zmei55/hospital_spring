@@ -1,6 +1,5 @@
 package com.hospital_spring.users.model;
 
-import com.hospital_spring.address.model.Address;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -44,6 +43,4 @@ public class User {
     @NotNull
     private boolean isNotLocked;
     private String token;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Address.class)
-    private Address address;
 }

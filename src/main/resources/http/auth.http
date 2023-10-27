@@ -1,27 +1,16 @@
-POST localhost:8080/api/auth/register
-Content-Type: application/json
-
-{
-  "username": "qwe",
-  "password": "qwe123",
-  "firstName": "John",
-  "lastName": "Smith",
-  "workplace": "SURGERY__TREATMENT_ROOM"
-}
-
-###
-
-GET localhost:8080/api/auth/login
+POST {{myHost}}/api/auth/register
 Content-Type: application/x-www-form-urlencoded
 
-username=qwe&password=qwe12
+username=qwe&password=qwe123&name=Svetlana Schmidt&workplace=SURGERY__TREATMENT_ROOM&position=Krankenschwester
 
 ###
 
-GET localhost:8080/api/auth/logout
+GET {{myHost}}/api/auth/login
+Content-Type: application/x-www-form-urlencoded
+
+username=qwe&password=qwe123
+
 
 ###
 
-GET localhost:8080/api/users/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJxd2UiLCJleHAiOjE2OTczMjU2MzMsIndvcmtwbGFjZSI6IlNVUkdFUllfX1RSRUFUTUVOVF9ST09NIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9hdXRoL2xvZ2luIn0.LVprmgerWBL_kg_JuwM2ESaroBtdF_ON5mwpljx2XRU
-#Authorization: Bearer 9301712e-8de3-44d3-a78d-cf1a1e365e1f
+GET {{myHost}}/api/auth/logout
