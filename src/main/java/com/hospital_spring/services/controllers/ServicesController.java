@@ -1,6 +1,9 @@
 package com.hospital_spring.services.controllers;
 
 import com.hospital_spring.services.controllers.api.ServicesApi;
+import com.hospital_spring.services.dto.FilterServiceDto;
+import com.hospital_spring.services.dto.NewServiceDto;
+import com.hospital_spring.services.dto.UpdateServiceDto;
 import com.hospital_spring.services.services.ServicesService;
 import com.hospital_spring.shared.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +16,10 @@ public class ServicesController implements ServicesApi {
     private final ServicesService servicesService;
 
     @Override
-    public ResponseEntity<ResponseDto> addNew(String name, String code) {
+    public ResponseEntity<ResponseDto> addNew(NewServiceDto newService) {
         return ResponseEntity.status(201)
             .body(ResponseDto.fromCreated(
-                servicesService.addNew(name, code)
+                servicesService.addNew(newService)
             ));
     }
 
@@ -28,16 +31,16 @@ public class ServicesController implements ServicesApi {
     }
 
     @Override
-    public ResponseEntity<ResponseDto> getAllActiveByFilter(String filter) {
+    public ResponseEntity<ResponseDto> getAllActiveByFilter(FilterServiceDto filter) {
         return ResponseEntity.ok(ResponseDto.fromSuccessful(
             servicesService.getAllActiveByFilter(filter)
         ));
     }
 
     @Override
-    public ResponseEntity<ResponseDto> updateById(Long serviceId, String name, String code, boolean isActive) {
+    public ResponseEntity<ResponseDto> updateById(Long serviceId, UpdateServiceDto updateService) {
         return ResponseEntity.ok(ResponseDto.fromSuccessful(
-            servicesService.updateById(serviceId, name, code, isActive)
+            servicesService.updateById(serviceId, updateService)
         ));
     }
 

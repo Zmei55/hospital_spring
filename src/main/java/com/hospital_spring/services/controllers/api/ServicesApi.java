@@ -1,5 +1,8 @@
 package com.hospital_spring.services.controllers.api;
 
+import com.hospital_spring.services.dto.FilterServiceDto;
+import com.hospital_spring.services.dto.NewServiceDto;
+import com.hospital_spring.services.dto.UpdateServiceDto;
 import com.hospital_spring.shared.dto.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -24,10 +27,7 @@ public interface ServicesApi {
                     schema = @Schema(implementation = ResponseDto.class))})}
     )
     @PostMapping("/add")
-    ResponseEntity<ResponseDto> addNew(
-        @RequestParam String name,
-        @RequestParam String code
-    );
+    ResponseEntity<ResponseDto> addNew(@RequestBody NewServiceDto newService);
 
     @Operation(summary = "Get by id", description = "Get service by id")
     @ApiResponses(value = {
@@ -47,7 +47,7 @@ public interface ServicesApi {
                     schema = @Schema(implementation = ResponseDto.class))})}
     )
     @PostMapping("/")
-    ResponseEntity<ResponseDto> getAllActiveByFilter(@RequestParam String filter);
+    ResponseEntity<ResponseDto> getAllActiveByFilter(@RequestBody FilterServiceDto filter);
 
     @Operation(summary = "Update", description = "Update service data by id")
     @ApiResponses(value = {
@@ -59,10 +59,8 @@ public interface ServicesApi {
     @PutMapping("/{service-id}")
     ResponseEntity<ResponseDto> updateById(
         @PathVariable("service-id") Long serviceId,
-        @RequestParam String name,
-        @RequestParam String code,
-        @RequestParam boolean isActive
-    );
+        @RequestBody UpdateServiceDto updateService
+        );
 
     @Operation(summary = "Delete service", description = "Delete service by id")
     @ApiResponses(value = {

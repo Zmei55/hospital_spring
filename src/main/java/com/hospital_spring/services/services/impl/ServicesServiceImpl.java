@@ -1,6 +1,9 @@
 package com.hospital_spring.services.services.impl;
 
+import com.hospital_spring.services.dto.FilterServiceDto;
+import com.hospital_spring.services.dto.NewServiceDto;
 import com.hospital_spring.services.dto.ServiceDto;
+import com.hospital_spring.services.dto.UpdateServiceDto;
 import com.hospital_spring.services.model.Service;
 import com.hospital_spring.services.repositories.ServicesRepository;
 import com.hospital_spring.services.services.ServicesService;
@@ -16,10 +19,10 @@ public class ServicesServiceImpl implements ServicesService {
     private final ServicesRepository servicesRepository;
 
     @Override
-    public ServiceDto addNew(String name, String code) {
+    public ServiceDto addNew(NewServiceDto newService) {
         Service service = Service.builder()
-            .name(name)
-            .code(code)
+            .name(newService.getName())
+            .code(newService.getCode())
             .isActive(true)
             .createdAt(LocalDateTime.now())
             .build();
@@ -39,21 +42,21 @@ public class ServicesServiceImpl implements ServicesService {
     }
 
     @Override
-    public List<ServiceDto> getAllActiveByFilter(String filter) {
-        List<Service> serviceList = servicesRepository.findAllByNameContainingIgnoreCaseAndIsActiveIsTrue(filter);
+    public List<ServiceDto> getAllActiveByFilter(FilterServiceDto filter) {
+        List<Service> serviceList = servicesRepository.findAllByNameContainingIgnoreCaseAndIsActiveIsTrue(filter.getName());
 
         return ServiceDto.from(serviceList);
     }
 
     @Override
-    public ServiceDto updateById(Long serviceId, String name, String code, boolean isActive) {
+    public ServiceDto updateById(Long serviceId, UpdateServiceDto updateService) {
         Service service = servicesRepository.findById(serviceId).orElseThrow(
             () -> new NotFoundException("Service with id <" + serviceId + "> not found")
         );
 
-        service.setName(name);
-        service.setCode(code);
-        service.setActive(isActive);
+        service.setName(updateService.getName());
+        service.setCode(updateService.getCode());
+        service.setActive(updateService.isActive());
         servicesRepository.save(service);
 
         return ServiceDto.from(service);
