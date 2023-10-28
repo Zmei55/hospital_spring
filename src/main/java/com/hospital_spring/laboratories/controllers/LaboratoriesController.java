@@ -1,6 +1,8 @@
 package com.hospital_spring.laboratories.controllers;
 
 import com.hospital_spring.laboratories.controllers.api.LaboratoriesApi;
+import com.hospital_spring.laboratories.dto.NewLaboratoryDto;
+import com.hospital_spring.laboratories.dto.UpdateLaboratoryDto;
 import com.hospital_spring.laboratories.services.LaboratoriesService;
 import com.hospital_spring.shared.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +15,10 @@ public class LaboratoriesController implements LaboratoriesApi {
     private final LaboratoriesService laboratoriesService;
 
     @Override
-    public ResponseEntity<ResponseDto> addNew(String name) {
+    public ResponseEntity<ResponseDto> addNew(NewLaboratoryDto newLaboratory) {
         return ResponseEntity.status(201)
             .body(ResponseDto.fromCreated(
-                laboratoriesService.addNew(name)
+                laboratoriesService.addNew(newLaboratory)
             ));
     }
 
@@ -35,9 +37,9 @@ public class LaboratoriesController implements LaboratoriesApi {
     }
 
     @Override
-    public ResponseEntity<ResponseDto> updateById(Long laborId, String name, boolean isActive) {
+    public ResponseEntity<ResponseDto> updateById(Long laborId, UpdateLaboratoryDto updateLaboratory) {
         return ResponseEntity.ok(ResponseDto.fromSuccessful(
-            laboratoriesService.updateById(laborId, name, isActive)
+            laboratoriesService.updateById(laborId, updateLaboratory)
         ));
     }
 

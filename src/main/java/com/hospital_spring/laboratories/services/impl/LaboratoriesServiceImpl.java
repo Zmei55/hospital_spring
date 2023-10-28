@@ -1,6 +1,10 @@
 package com.hospital_spring.laboratories.services.impl;
 
+import com.hospital_spring.address.model.Address;
+import com.hospital_spring.address.repositories.AddressesRepository;
 import com.hospital_spring.laboratories.dto.LaboratoryDto;
+import com.hospital_spring.laboratories.dto.NewLaboratoryDto;
+import com.hospital_spring.laboratories.dto.UpdateLaboratoryDto;
 import com.hospital_spring.laboratories.model.Laboratory;
 import com.hospital_spring.laboratories.repositories.LaboratoriesRepository;
 import com.hospital_spring.laboratories.services.LaboratoriesService;
@@ -15,13 +19,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LaboratoriesServiceImpl implements LaboratoriesService {
     private final LaboratoriesRepository laboratoriesRepository;
+    private final AddressesRepository addressesRepository;
 
     @Override
-    public LaboratoryDto addNew(String name) {
+    public LaboratoryDto addNew(NewLaboratoryDto newLaboratory) {
+        Address address = addressesRepository.findById(newLaboratory.getAddressId()).orElseThrow(
+            () -> new NotFoundException("Address with id <" + newLaboratory.getAddressId() + "> not found")
+        );
+
         Laboratory laboratory = Laboratory.builder()
-            .name(name)
+            .name(newLaboratory.getName())
             .isActive(true)
-//            .address()
+            .address(address)
             .createdAt(LocalDateTime.now())
             .build();
 
@@ -48,14 +57,14 @@ public class LaboratoriesServiceImpl implements LaboratoriesService {
     }
 
     @Override
-    public LaboratoryDto updateById(Long laborId, String name, boolean isActive) {
+    public LaboratoryDto updateById(Long laborId, UpdateLaboratoryDto updateLaboratory) {
         Laboratory laboratory = laboratoriesRepository.findById(laborId)
             .orElseThrow(
                 () -> new NotFoundException("Laboratory with id <" + laborId + "> not found")
             );
 
-        laboratory.setName(name);
-        laboratory.setActive(isActive);
+        laboratory.setName(updateLaboratory.getName());
+        laboratory.setActive(updateLaboratory.isActive());
 
         laboratoriesRepository.save(laboratory);
 

@@ -1,5 +1,7 @@
 package com.hospital_spring.laboratories.controllers.api;
 
+import com.hospital_spring.laboratories.dto.NewLaboratoryDto;
+import com.hospital_spring.laboratories.dto.UpdateLaboratoryDto;
 import com.hospital_spring.shared.dto.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -24,7 +26,7 @@ public interface LaboratoriesApi {
                     schema = @Schema(implementation = ResponseDto.class))})}
     )
     @PostMapping("/add")
-    ResponseEntity<ResponseDto> addNew(@RequestParam String name);
+    ResponseEntity<ResponseDto> addNew(@RequestBody NewLaboratoryDto newLaboratory);
 
     @Operation(summary = "Get by id", description = "Get laboratory by id")
     @ApiResponses(value = {
@@ -56,9 +58,8 @@ public interface LaboratoriesApi {
     @PutMapping("/{labor-id}")
     ResponseEntity<ResponseDto> updateById(
         @PathVariable("labor-id") Long laborId,
-        @RequestParam String name,
-        @RequestParam boolean isActive
-    );
+        @RequestBody UpdateLaboratoryDto updateLaboratory
+        );
 
     @Operation(summary = "Delete laboratory", description = "Delete laboratory by id")
     @ApiResponses(value = {
