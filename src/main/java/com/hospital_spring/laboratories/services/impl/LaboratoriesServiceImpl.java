@@ -63,7 +63,7 @@ public class LaboratoriesServiceImpl implements LaboratoriesService {
                 () -> new NotFoundException("Laboratory with id <" + laborId + "> not found")
             );
 
-        laboratory.setName(updateLaboratory.getName());
+        if (updateLaboratory.getName() != null) laboratory.setName(updateLaboratory.getName());
         laboratory.setActive(updateLaboratory.isActive());
 
         laboratoriesRepository.save(laboratory);

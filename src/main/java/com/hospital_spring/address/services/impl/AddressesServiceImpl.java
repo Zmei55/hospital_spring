@@ -47,10 +47,10 @@ public class AddressesServiceImpl implements AddressesService {
                 () -> new NotFoundException("Address with id <" + addressId + "> not found")
             );
 
-        address.setStreet(newAddress.getStreet());
-        address.setHouseNumber(newAddress.getHouseNumber());
-        address.setCity(newAddress.getCity());
-        address.setPostcode(newAddress.getPostcode());
+        if (newAddress.getStreet() != null) address.setStreet(newAddress.getStreet());
+        if (newAddress.getStreet() != null) address.setHouseNumber(newAddress.getHouseNumber());
+        if (newAddress.getStreet() != null) address.setCity(newAddress.getCity());
+        if (newAddress.getStreet() != null) address.setPostcode(newAddress.getPostcode());
 
         addressesRepository.save(address);
 

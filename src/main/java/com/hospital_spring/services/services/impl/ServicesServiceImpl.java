@@ -43,7 +43,7 @@ public class ServicesServiceImpl implements ServicesService {
 
     @Override
     public List<ServiceDto> getAllActiveByFilter(FilterServiceDto filter) {
-        List<Service> serviceList = servicesRepository.findAllByNameContainingIgnoreCaseAndIsActiveIsTrue(filter.getName());
+        List<Service> serviceList = servicesRepository.findAllByNameContainingIgnoreCaseAndIsActiveTrue(filter.getName());
 
         return ServiceDto.from(serviceList);
     }
@@ -54,8 +54,8 @@ public class ServicesServiceImpl implements ServicesService {
             () -> new NotFoundException("Service with id <" + serviceId + "> not found")
         );
 
-        service.setName(updateService.getName());
-        service.setCode(updateService.getCode());
+        if (updateService.getName() != null) service.setName(updateService.getName());
+        if (updateService.getCode() != null) service.setCode(updateService.getCode());
         service.setActive(updateService.isActive());
         servicesRepository.save(service);
 

@@ -81,15 +81,13 @@ public class PatientsServiceImpl implements PatientsService {
                 () -> new NotFoundException("Patient with id <" + patientId + "> not found")
             );
 
-        patient.setName(newPatient.getName());
-        if (!newPatient.getBirthDate().isEmpty()) {
-            patient.setBirthDate(newPatient.getBirthDate());
-        }
-        patient.setCardNumber(newPatient.getCardNumber());
-        patient.setGender(Patient.Gender.valueOf(newPatient.getGender()));
-        patient.setPhoneNumber(newPatient.getPhoneNumber());
-        patient.setEmail(newPatient.getEmail());
-        patient.setIdentityDocument(newPatient.getIdentityDocument());
+        if (newPatient.getName() != null) patient.setName(newPatient.getName());
+        if (!newPatient.getBirthDate().isEmpty()) patient.setBirthDate(newPatient.getBirthDate());
+        if (newPatient.getCardNumber() != 0) patient.setCardNumber(newPatient.getCardNumber());
+        if (newPatient.getGender() != null) patient.setGender(Patient.Gender.valueOf(newPatient.getGender()));
+        if (newPatient.getPhoneNumber() != null) patient.setPhoneNumber(newPatient.getPhoneNumber());
+        if (newPatient.getEmail() != null) patient.setEmail(newPatient.getEmail());
+        if (newPatient.getIdentityDocument() != null) patient.setIdentityDocument(newPatient.getIdentityDocument());
 
         patientsRepository.save(patient);
 
