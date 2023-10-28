@@ -43,7 +43,7 @@ public class ServicesServiceImpl implements ServicesService {
 
     @Override
     public List<ServiceDto> getAllActiveByFilter(FilterServiceDto filter) {
-        List<Service> serviceList = servicesRepository.findAllByNameContainingIgnoreCaseAndIsActiveTrue(filter.getName());
+        List<Service> serviceList = servicesRepository.findAllByNameContainingIgnoreCaseAndIsActiveTrue(filter.getFilter());
 
         return ServiceDto.from(serviceList);
     }

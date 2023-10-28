@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class FilterServiceDto {
     @Schema(description = "Name of the service", example = "Immunglobulin A (IgA)")
-    private String name;
+    private String filter;
 }
