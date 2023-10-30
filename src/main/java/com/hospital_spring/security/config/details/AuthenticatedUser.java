@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-@Getter
 @RequiredArgsConstructor
+@Getter
 public class AuthenticatedUser implements UserDetails { // UserDetailsImpl
     private final User user;
 
@@ -20,6 +20,10 @@ public class AuthenticatedUser implements UserDetails { // UserDetailsImpl
 //        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().name());
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getWorkplace().name());
         return Collections.singleton(authority);
+
+//        List<GrantedAuthority> authorities = new ArrayList<>();
+//        authorities.add(authority);
+//        return authorities;
     }
 
     @Override

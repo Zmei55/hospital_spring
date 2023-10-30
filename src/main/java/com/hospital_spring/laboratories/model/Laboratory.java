@@ -26,6 +26,6 @@ public class Laboratory {
     private boolean isActive;
     @NotNull
     private LocalDateTime createdAt;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Address.class)
+    @OneToOne(cascade = CascadeType.ALL, targetEntity = Address.class)
     private Address address;
 }
