@@ -1,6 +1,5 @@
 package com.hospital_spring.requests.controllers.api;
 
-import com.hospital_spring.requests.dto.NewRequestDetailsDto;
 import com.hospital_spring.requests.dto.UpdateStatusRequestDetailsDto;
 import com.hospital_spring.shared.dto.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,16 +17,6 @@ import org.springframework.web.bind.annotation.*;
 })
 @RequestMapping("/api/request-details")
 public interface RequestDetailsApi {
-    @Operation(summary = "Add", description = "Add new request details")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "New request details",
-            content = {
-                @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ResponseDto.class))})}
-    )
-    @PostMapping("/add")
-    ResponseEntity<ResponseDto> addNew(@RequestBody NewRequestDetailsDto newDetails);
-
     @Operation(summary = "Get by id", description = "Get request details by id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Request details by id",

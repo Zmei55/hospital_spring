@@ -5,6 +5,7 @@ import com.hospital_spring.laboratories.repositories.LaboratoriesRepository;
 import com.hospital_spring.requests.dto.NewRequestDetailsDto;
 import com.hospital_spring.requests.dto.RequestDetailsDto;
 import com.hospital_spring.requests.dto.UpdateStatusRequestDetailsDto;
+import com.hospital_spring.requests.model.Request;
 import com.hospital_spring.requests.model.RequestDetails;
 import com.hospital_spring.requests.repositories.RequestDetailsRepository;
 import com.hospital_spring.requests.services.RequestDetailsService;
@@ -14,6 +15,7 @@ import com.hospital_spring.shared.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
@@ -23,15 +25,16 @@ public class RequestDetailsServiceImpl implements RequestDetailsService {
     private final LaboratoriesRepository laborsRepository;
 
     @Override
-    public RequestDetails addNew(NewRequestDetailsDto newDetails) {
-        Service service = servicesRepository.findById(newDetails.getServiceId()).orElseThrow(
-            () -> new NotFoundException("Service with id <" + newDetails.getServiceId() + "> not found")
+    public RequestDetails addNew(Long serviceId, Long laborId, Request request) {
+        Service service = servicesRepository.findById(serviceId).orElseThrow(
+            () -> new NotFoundException("Service with id <" + serviceId + "> not found")
         );
-        Laboratory laboratory = laborsRepository.findById(newDetails.getLaborId()).orElseThrow(
-            () -> new NotFoundException("Laboratory with id <" + newDetails.getLaborId() + "> not found")
+        Laboratory laboratory = laborsRepository.findById(laborId).orElseThrow(
+            () -> new NotFoundException("Laboratory with id <" + laborId + "> not found")
         );
 
         RequestDetails details = RequestDetails.builder()
+            .request(request)
             .service(service)
             .labor(laboratory)
             .isCompleted(false)
@@ -40,6 +43,13 @@ public class RequestDetailsServiceImpl implements RequestDetailsService {
         detailsRepository.save(details);
 
         return details;
+    }
+
+    @Override
+    public List<RequestDetails> addNewList(List<NewRequestDetailsDto> newDetailsList, Request request) {
+        return newDetailsList.stream()
+            .map(detail -> this.addNew(detail.getServiceId(), detail.getLaborId(), request))
+            .toList();
     }
 
     @Override
