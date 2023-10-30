@@ -1,0 +1,26 @@
+# Add new service
+POST {{myHost}}/api/services/add
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Immunglobulin A (IgA)",
+  "code": "L18.36.00.0.001"
+}
+
+###
+
+# Get by id
+GET {{myHost}}/api/services/1
+Authorization: Bearer {{token}}
+
+###
+
+# Get by filter
+POST {{myHost}}/api/services/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "b"
+}

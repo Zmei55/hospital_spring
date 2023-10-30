@@ -1,0 +1,34 @@
+# Add new patient
+POST {{myHost}}/api/patients/add
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Emma Weber",
+  "birthDate": "1968-05-26T00:00:00.000+00:00Z",
+  "cardNumber": 123456789,
+  "gender": "FEMALE",
+  "phoneNumber": "+491594568563",
+  "email": "emmaweber@mail.com",
+  "identityDocument": "ausweis",
+  "addressId": "1"
+}
+
+###
+
+# Get by id
+GET {{myHost}}/api/patients/1
+Authorization: Bearer {{token}}
+
+###
+
+# Find patients by filter
+POST {{myHost}}/api/patients/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Emma Weber",
+  "birthDate": "",
+  "cardNumber": ""
+}

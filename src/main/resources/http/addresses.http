@@ -1,1 +1,17 @@
-POST localhost:8080/api/addresses/add
+# Add new addresse
+POST {{myHost}}/api/addresses/add
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "street": "Landsberger Allee",
+    "houseNumber": 364,
+    "city": "Berlin",
+    "postcode": 10365
+}
+
+###
+
+# Get by id
+GET {{myHost}}/api/addresses/1
+Authorization: Bearer {{token}}

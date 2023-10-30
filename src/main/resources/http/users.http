@@ -1,2 +1,18 @@
-GET localhost:8080/api/users/1
+# Get user by id
+GET {{myHost}}/api/users/1
 Authorization: Bearer {{token}}
+
+###
+
+#Update by id
+PUT {{myHost}}/api/users/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Svetlana Schmidt",
+  "workplace": "SURGERY__TREATMENT_ROOM",
+  "position": "Krankenschwester",
+  "isNotLocked": true,
+  "role": "ADMIN"
+}

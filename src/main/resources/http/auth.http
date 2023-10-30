@@ -1,15 +1,16 @@
 POST {{myHost}}/api/auth/register
 Content-Type: application/x-www-form-urlencoded
 
-username=qwe&password=qwe123&name=Svetlana Schmidt&workplace=SURGERY__TREATMENT_ROOM&position=Krankenschwester
+username={{username}}&password={{password}}&name=Svetlana Schmidt&workplace=SURGERY__TREATMENT_ROOM&position=Krankenschwester
 
 ###
 
-GET {{myHost}}/api/auth/login
+POST {{myHost}}/api/auth/login
 Content-Type: application/x-www-form-urlencoded
 
-username=qwe&password=qwe123
+username={{username}}&password={{password}}
 
+> {% client.global.set("token", response.body.data.token); %}
 
 ###
 

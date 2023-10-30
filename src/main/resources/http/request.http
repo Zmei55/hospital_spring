@@ -1,0 +1,32 @@
+# Add new request
+POST {{myHost}}/api/requests/add
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "requestNumber": 1,
+  "patientId": 1,
+  "requestDetails": [
+    {
+      "serviceId": 1,
+      "laborId": 1
+    },
+    {
+      "serviceId": 1,
+      "laborId": 1
+    }
+  ]
+}
+
+###
+
+# Get requests count
+POST {{myHost}}/api/requests/count
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+###
+
+# Get by id
+GET {{myHost}}/api/requests/1
+Authorization: Bearer {{token}}
