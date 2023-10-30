@@ -42,5 +42,6 @@ public class User {
     private LocalDateTime createdAt;
     @NotNull
     private boolean isNotLocked;
+    @Column(columnDefinition = "varchar(400)")
     private String token;
 }

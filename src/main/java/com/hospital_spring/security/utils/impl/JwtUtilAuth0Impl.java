@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.hospital_spring.security.config.details.AuthenticatedUser;
 import com.hospital_spring.security.utils.JwtUtil;
+import com.hospital_spring.users.dto.UserForTokenDto;
 import com.hospital_spring.users.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,13 +33,17 @@ public class JwtUtilAuth0Impl implements JwtUtil {
     private String secret;
 
     @Override
-    public String generateToken(String subject, String authority, String issuer) {
+    public String generateToken(UserForTokenDto user, String authority, String issuer) {
         Algorithm algorithm = Algorithm.HMAC256(secret.getBytes(StandardCharsets.UTF_8)); // алгоритм создания токена
 
         return JWT.create()
-            .withSubject(subject)
+            .withSubject(user.getUsername())
             .withExpiresAt(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRES_TIME)) // на какое время выдан accessToken
+            .withClaim("id", user.getId())
+            .withClaim("name", user.getName())
             .withClaim("workplace", authority)
+            .withClaim("position", user.getPosition())
+            .withClaim("isNotLocked", user.isNotLocked())
             .withIssuer(issuer)
             .sign(algorithm);
     }
@@ -51,8 +56,12 @@ public class JwtUtilAuth0Impl implements JwtUtil {
 
         UserDetails userDetails = new AuthenticatedUser(
             User.builder()
+                .id(parsedToken.getId())
                 .username(parsedToken.getUsername())
-                .workplace(User.Workplace.SURGERY__TREATMENT_ROOM)
+                .name(parsedToken.getName())
+                .workplace(User.Workplace.valueOf(parsedToken.getWorkplace()))
+                .position(parsedToken.getPosition())
+                .isNotLocked(parsedToken.isNotLocked())
                 .build()
         );
 
@@ -71,11 +80,19 @@ public class JwtUtilAuth0Impl implements JwtUtil {
         DecodedJWT decodedJWT = verifier.verify(token); // декодирование токена
 
         String username = decodedJWT.getSubject();
+        Long id = decodedJWT.getClaim("id").asLong();
+        String name = decodedJWT.getClaim("name").asString();
         String workplace = decodedJWT.getClaim("workplace").asString();
+        String position = decodedJWT.getClaim("position").asString();
+        boolean isNotLocked = decodedJWT.getClaim("isNotLocked").asBoolean();
 
         return ParsedToken.builder()
+            .id(id)
             .username(username)
+            .name(name)
             .workplace(workplace)
+            .position(position)
+            .isNotLocked(isNotLocked)
             .build();
     }
 
@@ -85,7 +102,11 @@ public class JwtUtilAuth0Impl implements JwtUtil {
     @Data
     @Builder
     private static class ParsedToken {
+        private Long id;
         private String username;
+        private String name;
         private String workplace;
+        private String position;
+        private boolean isNotLocked;
     }
 }

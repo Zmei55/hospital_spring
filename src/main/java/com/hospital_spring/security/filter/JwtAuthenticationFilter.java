@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hospital_spring.security.config.details.AuthenticatedUser;
 import com.hospital_spring.security.utils.JwtUtil;
 import com.hospital_spring.shared.dto.ResponseDto;
-import com.hospital_spring.users.dto.ProfileDto;
 import com.hospital_spring.users.dto.UserAndTokenResponseDto;
+import com.hospital_spring.users.dto.UserForTokenDto;
 import com.hospital_spring.users.model.User;
 import com.hospital_spring.users.repositories.UsersRepository;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -51,14 +51,22 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setContentType("application/json");
 
         GrantedAuthority currentAuthority = authResult.getAuthorities().stream().findFirst().orElseThrow();
-        String username = ((AuthenticatedUser) authResult.getPrincipal()).getUsername();
+        Long userId = ((AuthenticatedUser) authResult.getPrincipal()).getUser().getId();
         String issuer = request.getRequestURL().toString();
 
-        String token = jwtUtil.generateToken(username, currentAuthority.getAuthority(), issuer);
-
-        User user = usersRepository.findByUsername(username).orElseThrow(
+        User user = usersRepository.findById(userId).orElseThrow(
             () -> new UsernameNotFoundException("User not found")
         );
+
+        UserForTokenDto userForToken = UserForTokenDto.builder()
+            .id(user.getId())
+            .username(user.getUsername())
+            .name(user.getName())
+            .position(user.getPosition())
+            .isNotLocked(user.isNotLocked())
+            .build();
+
+        String token = jwtUtil.generateToken(userForToken, currentAuthority.getAuthority(), issuer);
 
         user.setToken(token);
         usersRepository.save(user);
@@ -66,7 +74,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         ResponseDto responseDto = ResponseDto.builder()
             .message("Successful Authentication")
             .status(200)
-//            .data(ProfileDto.from(user))
             .data(UserAndTokenResponseDto.from(user, token))
             .build();
 
