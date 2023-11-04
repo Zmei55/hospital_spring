@@ -30,3 +30,18 @@ Content-Type: application/json
 # Get by id
 GET {{myHost}}/api/requests/1
 Authorization: Bearer {{token}}
+
+###
+
+#Find by filter
+#"Emma Weber"
+POST {{myHost}}/api/requests/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "",
+  "cardNumber": 0,
+  "requestNumber": 1,
+  "createdDate": ""
+}
