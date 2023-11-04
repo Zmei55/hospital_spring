@@ -1,5 +1,6 @@
 package com.hospital_spring.users.model;
 
+import com.hospital_spring.requests.model.Request;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -44,4 +47,6 @@ public class User {
     private boolean isNotLocked;
     @Column(columnDefinition = "varchar(400)")
     private String token;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Request.class)
+    private List<Request> requests = new ArrayList<>();
 }
