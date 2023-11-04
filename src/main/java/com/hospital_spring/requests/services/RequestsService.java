@@ -4,7 +4,6 @@ import com.hospital_spring.requests.dto.FilterRequestDto;
 import com.hospital_spring.requests.dto.NewRequestDto;
 import com.hospital_spring.requests.dto.RequestDto;
 import com.hospital_spring.requests.dto.SearchRequestDto;
-import com.hospital_spring.requests.model.Request;
 import com.hospital_spring.security.config.details.AuthenticatedUser;
 
 import java.util.List;
