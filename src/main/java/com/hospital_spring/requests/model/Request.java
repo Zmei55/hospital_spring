@@ -26,15 +26,15 @@ public class Request {
     @NotNull
     private Long requestNumber;
     @NotNull
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, targetEntity = Patient.class)
     private Patient patient;
-    @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = RequestDetails.class)
     private List<RequestDetails> requestDetails = new ArrayList<>();
     @NotNull
     private boolean isCompleted;
     @NotNull
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private User owner;
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, targetEntity = User.class)
+    private User user;
     @NotNull
     private LocalDateTime createdAt;
 }

@@ -17,8 +17,6 @@ import java.util.stream.Collectors;
 public class RequestDetailsDto {
     @Schema(description = "Id of the details", example = "1")
     private Long _id;
-    @Schema(description = "Id of the request of the laboratory", example = "1")
-    private Long requestId;
     @Schema(description = "Id of the service", example = "1")
     private Long serviceId;
     @Schema(description = "Id of the laboratory", example = "1")
@@ -31,9 +29,8 @@ public class RequestDetailsDto {
     public static RequestDetailsDto from(RequestDetails details) {
         return RequestDetailsDto.builder()
             ._id(details.getId())
-            .requestId(details.getRequest().getId())
             .serviceId(details.getService().getId())
-            .laborId(details.getLabor().getId())
+            .laborId(details.getLaboratory().getId())
             .isCompleted(details.isCompleted())
             .createdAt(details.getCreatedAt().toString())
             .build();

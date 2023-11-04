@@ -5,7 +5,10 @@ import com.hospital_spring.patients.repositories.PatientsRepository;
 import com.hospital_spring.requests.dto.*;
 import com.hospital_spring.requests.model.Request;
 import com.hospital_spring.requests.model.RequestDetails;
+import com.hospital_spring.requests.model.SearchRequest;
+import com.hospital_spring.requests.repositories.RequestDetailsRepository;
 import com.hospital_spring.requests.repositories.RequestsRepository;
+import com.hospital_spring.requests.repositories.SearchRequestRepository;
 import com.hospital_spring.requests.services.RequestDetailsService;
 import com.hospital_spring.requests.services.RequestsService;
 import com.hospital_spring.security.config.details.AuthenticatedUser;
@@ -23,6 +26,8 @@ public class RequestsServiceImpl implements RequestsService {
     private final RequestsRepository requestsRepository;
     private final UsersRepository usersRepository;
     private final PatientsRepository patientsRepository;
+    private final RequestDetailsRepository detailsRepository;
+    private final SearchRequestRepository searchRequestRepository;
     private final RequestDetailsService detailsService;
 
     @Override
@@ -42,15 +47,23 @@ public class RequestsServiceImpl implements RequestsService {
             .requestNumber(newRequest.getRequestNumber())
             .patient(patient)
             .isCompleted(false)
-            .owner(user)
+            .user(user)
             .createdAt(LocalDateTime.now())
             .build();
 
         requestsRepository.save(request);
 
-        List<RequestDetails> detailsList = detailsService.addNewList(newRequest.getRequestDetails(), request);
+        SearchRequest searchRequest = SearchRequest.builder()
+            .patientName(patient.getName())
+            .cardNumber(patient.getCardNumber())
+            .request(request)
+            .requestNumber(request.getRequestNumber())
+            .createdAt(LocalDateTime.now())
+            .build();
 
-        requestsRepository.save(request);
+        searchRequestRepository.save(searchRequest);
+
+        List<RequestDetails> detailsList = detailsService.addNewList(newRequest.getRequestDetails(), request);
 
         return RequestDto.from(request, detailsList);
     }
@@ -60,30 +73,32 @@ public class RequestsServiceImpl implements RequestsService {
         Request request = requestsRepository.findById(requestId).orElseThrow(
             () -> new NotFoundException("Request with id <" + requestId + "> not found")
         );
+        List<RequestDetails> detailsList = detailsRepository.findAllByRequest_Id(requestId);
 
-        return RequestDto.from(request);
+        return RequestDto.from(request, detailsList);
     }
 
     @Override
-    public List<RequestDto> getByFilter(FilterRequestDto filter) {
-        String name = !filter.getPatientName().isEmpty() ? filter.getPatientName() : null;
-        int cardNumber = filter.getPatientCardNumber() != 0 ? filter.getPatientCardNumber() : 0;
-        Long requestNumber = filter.getRequestNumber() != 0 ? filter.getRequestNumber() : 0;
-        String createdDate = !filter.getRequestCreatedAt().isEmpty() ? filter.getRequestCreatedAt() : null;
+    public List<SearchRequestDto> getByFilter(FilterRequestDto filter) {
+        String patientName = filter.getPatientName() == null || filter.getPatientName().isEmpty() ? null : filter.getPatientName();
 
-        List<Request> requestList = requestsRepository.findByNameContainingIgnoreCaseAndCardNumberAndRequestNumberAndCreatedAt(
-            name,
-            cardNumber,
-            requestNumber,
-            createdDate
+        List<SearchRequest> requestList = searchRequestRepository.findAllByPatientNameContainingIgnoreCaseOrCardNumberOrRequestNumberOrCreatedAt(
+            patientName,
+            filter.getCardNumber(),
+            filter.getRequestNumber(),
+            filter.getRequestCreatedAt()
         );
 
-        return RequestDto.from(requestList);
+        if (!requestList.isEmpty()) {
+            return SearchRequestDto.from(requestList);
+        } else {
+            throw new NotFoundException("Запрос не найден");
+        }
     }
 
     @Override
     public Long getRequestsDBCount() {
-        return requestsRepository.count();
+        return requestsRepository.findTopByOrderByIdDesc();
     }
 
     @Override

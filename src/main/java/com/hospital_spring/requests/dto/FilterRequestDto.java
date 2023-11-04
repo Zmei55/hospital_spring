@@ -12,7 +12,7 @@ public class FilterRequestDto {
     @Schema(description = "Name of the patient", example = "John Smith")
     private String patientName;
     @Schema(description = "Card number of the patient", example = "123456789")
-    private int patientCardNumber;
+    private int cardNumber;
     @Schema(description = "Number of the request", example = "1")
     private Long requestNumber;
     @Schema(description = "Date of creation")

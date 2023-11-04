@@ -23,11 +23,11 @@ public class RequestDto {
     @Schema(description = "Id of the patient", example = "1")
     private Long patientId;
     @Schema(description = "Id's of the details", example = "1")
-    private List<Long> requestDetailsId;
+    private List<RequestDetailsDto> requestDetails;
     @Schema(description = "Completed is", example = "true")
     private boolean isCompleted;
     @Schema(description = "Id of the user", example = "1")
-    private Long ownerId;
+    private Long owner;
     @Schema(description = "Date of creation")
     private String createdAt;
 
@@ -36,9 +36,8 @@ public class RequestDto {
             ._id(request.getId())
             .requestNumber(request.getRequestNumber())
             .patientId(request.getPatient().getId())
-            .requestDetailsId(request.getRequestDetails().stream().map(RequestDetails::getId).toList())
             .isCompleted(request.isCompleted())
-            .ownerId(request.getOwner().getId())
+            .owner(request.getUser().getId())
             .createdAt(request.getCreatedAt().toString())
             .build();
     }
@@ -48,9 +47,9 @@ public class RequestDto {
             ._id(request.getId())
             .requestNumber(request.getRequestNumber())
             .patientId(request.getPatient().getId())
-            .requestDetailsId(detailsList.stream().map(RequestDetails::getId).toList())
+            .requestDetails(RequestDetailsDto.from(detailsList))
             .isCompleted(request.isCompleted())
-            .ownerId(request.getOwner().getId())
+            .owner(request.getUser().getId())
             .createdAt(request.getCreatedAt().toString())
             .build();
     }

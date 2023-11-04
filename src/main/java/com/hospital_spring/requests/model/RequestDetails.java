@@ -21,17 +21,14 @@ public class RequestDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(cascade = CascadeType.REFRESH, targetEntity = Request.class)
-    @JoinColumn(name = "request_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.REFRESH, targetEntity = Request.class, fetch = FetchType.LAZY)
     private Request request;
     @NotNull
-    @ManyToOne(cascade = CascadeType.REFRESH, targetEntity = Service.class)
-    @JoinColumn(name = "service_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.REFRESH, targetEntity = Service.class, fetch = FetchType.LAZY)
     private Service service;
     @NotNull
-    @ManyToOne(cascade = CascadeType.REFRESH, targetEntity = Laboratory.class)
-    @JoinColumn(name = "labor_id", referencedColumnName = "id")
-    private Laboratory labor;
+    @ManyToOne(cascade = CascadeType.REFRESH, targetEntity = Laboratory.class, fetch = FetchType.LAZY)
+    private Laboratory laboratory;
     @NotNull
     private boolean isCompleted;
     @NotNull

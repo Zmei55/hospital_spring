@@ -36,7 +36,7 @@ public class RequestDetailsServiceImpl implements RequestDetailsService {
         RequestDetails details = RequestDetails.builder()
             .request(request)
             .service(service)
-            .labor(laboratory)
+            .laboratory(laboratory)
             .isCompleted(false)
             .createdAt(LocalDateTime.now())
             .build();
