@@ -92,7 +92,7 @@ public class RequestsServiceImpl implements RequestsService {
         if (!requestList.isEmpty()) {
             return SearchRequestDto.from(requestList);
         } else {
-            throw new NotFoundException("Запрос не найден");
+            throw new NotFoundException("Requests not found");
         }
     }
 

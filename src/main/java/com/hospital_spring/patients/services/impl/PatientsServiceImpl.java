@@ -67,7 +67,11 @@ public class PatientsServiceImpl implements PatientsService {
             number
         );
 
-        return PatientDto.from(patientList);
+        if (!patientList.isEmpty()) {
+            return PatientDto.from(patientList);
+        } else {
+            throw new NotFoundException("Patients not found");
+        }
     }
 
     @Override
