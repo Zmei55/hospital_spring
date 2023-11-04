@@ -52,11 +52,7 @@ public class PatientsServiceImpl implements PatientsService {
                 () -> new NotFoundException("Patient with id <" + patientId + "> not found")
             );
 
-        Address address = addressesRepository.findById(patient.getAddress().getId()).orElseThrow(
-            () -> new NotFoundException("Address with id<" + patient.getAddress().getId() + "> not found")
-        );
-
-        return PatientAndAddressDto.from(patient, address);
+        return PatientAndAddressDto.from(patient);
     }
 
     @Override

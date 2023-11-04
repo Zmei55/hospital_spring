@@ -33,7 +33,7 @@ public class PatientAndAddressDto {
     @Schema(description = "Address of the patient", example = "1")
     private AddressDto address;
 
-    public static PatientAndAddressDto from(Patient patient, Address address) {
+    public static PatientAndAddressDto from(Patient patient) {
         return PatientAndAddressDto.builder()
             ._id(patient.getId())
             .name(patient.getName())
@@ -43,7 +43,7 @@ public class PatientAndAddressDto {
             .phoneNumber(patient.getPhoneNumber())
             .email(patient.getEmail())
             .identityDocument(patient.getIdentityDocument())
-            .address(AddressDto.from(address))
+            .address(AddressDto.from(patient.getAddress()))
             .build();
     }
 }
