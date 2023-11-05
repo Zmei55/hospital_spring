@@ -2,24 +2,22 @@ package com.hospital_spring.patients.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class NewPatientDto {
-    @Schema(description = "First name of the patient", example = "John")
-    private String firstName;
-    @Schema(description = "Last name of the patient", example = "Smith")
-    private String lastName;
+    @Schema(description = "Name of the patient", example = "John Smith")
+    private String name;
     @Schema(description = "Birth date of the patient", example = "24.05.1974")
-    private LocalDateTime birthDate;
+    private String birthDate;
     @Schema(description = "Card number of the patient", example = "123456789")
     private int cardNumber;
-    @Schema(description = "Gender of the patient", example = "männlich")
+    @Schema(description = "Gender of the patient", example = "MALE")
     private String gender;
     @Schema(description = "Phone number of the patient", example = "+4917789743197")
     private String phoneNumber;

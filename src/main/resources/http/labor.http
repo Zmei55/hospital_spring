@@ -1,0 +1,21 @@
+# Add new labor
+POST {{myHost}}/api/labors/add
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Helix",
+  "addressId": 1
+}
+
+###
+
+# Get by id
+GET {{myHost}}/api/labors/1
+Authorization: Bearer {{token}}
+
+###
+
+# Get all is active
+GET {{myHost}}/api/labors/
+Authorization: Bearer {{token}}

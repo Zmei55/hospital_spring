@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,14 +15,12 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 public class PatientDto {
-    @Schema(description = "id of the patient", example = "1")
-    private Long id;
-    @Schema(description = "First name of the patient", example = "John")
-    private String firstName;
-    @Schema(description = "Last name of the patient", example = "Smith")
-    private String lastName;
+    @Schema(description = "Id of the patient", example = "1")
+    private Long _id;
+    @Schema(description = "Name of the patient", example = "John Smith")
+    private String name;
     @Schema(description = "Birth date of the patient", example = "24.05.1974")
-    private LocalDateTime birthDate;
+    private String birthDate;
     @Schema(description = "Card number of the patient", example = "123456789")
     private int cardNumber;
     @Schema(description = "Gender of the patient", example = "männlich")
@@ -39,18 +36,17 @@ public class PatientDto {
 
     public static PatientDto from(Patient patient) {
         return PatientDto.builder()
-            .id(patient.getId())
-            .firstName(patient.getFirstName())
-            .lastName(patient.getLastName())
+            ._id(patient.getId())
+            .name(patient.getName())
             .birthDate(patient.getBirthDate())
             .cardNumber(patient.getCardNumber())
             .gender(patient.getGender().name())
             .phoneNumber(patient.getPhoneNumber())
             .email(patient.getEmail())
             .identityDocument(patient.getIdentityDocument())
-//            .addressId(!patient.getAddress().isEmpty()
-//                ? patient.getAddress().getId()
-//                : null)
+            .addressId(patient.getAddress() != null
+                ? patient.getAddress().getId()
+                : null)
             .build();
     }
 

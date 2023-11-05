@@ -1,8 +1,13 @@
 package com.hospital_spring.users.services;
 
-import com.hospital_spring.users.dto.NewUserDto;
-import com.hospital_spring.users.dto.UserDto;
+import com.hospital_spring.users.dto.ProfileDto;
 
 public interface AuthService {
-    UserDto signUp(NewUserDto newUserDto);
+    ProfileDto signUp(
+        String username,
+        String password,
+        String name,
+        String workplace,
+        String position
+    );
 }
