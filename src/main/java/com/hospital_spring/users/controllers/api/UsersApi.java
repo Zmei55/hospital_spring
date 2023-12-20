@@ -59,7 +59,7 @@ public interface UsersApi {
         )
     })
     @PutMapping("/{user-id}")
-    ResponseEntity<ProfileDto> updateUser(
+    ResponseEntity<ResponseDto> updateUser(
         @Parameter(hidden = true) @PathVariable("user-id") Long userId,
         @RequestBody UserUpdateDto updatedUser);
 }

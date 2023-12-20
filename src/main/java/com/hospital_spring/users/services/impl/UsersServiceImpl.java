@@ -37,6 +37,7 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public ProfileDto updateUser(Long userId, UserUpdateDto updatedUser) {
+        System.out.println("updatedUser: " + updatedUser);
         User user = usersRepository.findById(userId)
             .orElseThrow(
                 () -> new NotFoundException("User with id <" + userId + "not found")
@@ -44,7 +45,7 @@ public class UsersServiceImpl implements UsersService {
 
         if (updatedUser.getName() != null) user.setName(updatedUser.getName());
         if (updatedUser.getWorkplace() != null) user.setWorkplace(User.Workplace.valueOf(updatedUser.getWorkplace()));
-        user.setNotLocked(updatedUser.isNotLocked());
+        if (updatedUser.getPosition() != null) user.setPosition(updatedUser.getPosition());
 
         usersRepository.save(user);
 
