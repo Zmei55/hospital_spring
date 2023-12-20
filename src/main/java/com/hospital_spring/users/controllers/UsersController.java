@@ -3,7 +3,6 @@ package com.hospital_spring.users.controllers;
 import com.hospital_spring.security.config.details.AuthenticatedUser;
 import com.hospital_spring.shared.dto.ResponseDto;
 import com.hospital_spring.users.controllers.api.UsersApi;
-import com.hospital_spring.users.dto.ProfileDto;
 import com.hospital_spring.users.dto.UserUpdateDto;
 import com.hospital_spring.users.services.UsersService;
 import lombok.RequiredArgsConstructor;
