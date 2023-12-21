@@ -39,7 +39,7 @@ public class TestConfig {
                             .email("john_smith@mail.com")
                             .role(User.Role.ADMIN)
                             .workplace(User.Workplace.SURGERY__TREATMENT_ROOM)
-                            .position("NURSE")
+                            .position("nurse")
                             .token("lkdflsdm.sldfksld.jdfkjdfkj")
                             .build()
                     );

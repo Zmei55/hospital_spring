@@ -72,7 +72,7 @@ class UsersControllerTest {
                 .name("John Smith")
                 .role(User.Role.ADMIN)
                 .workplace(User.Workplace.SURGERY__TREATMENT_ROOM)
-                .position("NURSE")
+                .position("nurse")
                 .isNotLocked(true)
                 .token("lkdflsdm.sldfksld.jdfkjdfkj")
                 .build()
@@ -86,7 +86,7 @@ class UsersControllerTest {
                 .name("Emma")
                 .role(User.Role.USER)
                 .workplace(User.Workplace.SURGERY__TREATMENT_ROOM)
-                .position("NURSE")
+                .position("nurse")
                 .isNotLocked(true)
                 .token("lkdflsdm.sldfksld.jdfkjdfkj")
                 .build()
@@ -106,7 +106,7 @@ class UsersControllerTest {
             .andExpect(jsonPath("$.data.username").value("asd"))
             .andExpect(jsonPath("$.data.role").value("ADMIN"))
             .andExpect(jsonPath("$.data.workplace").value("SURGERY__TREATMENT_ROOM"))
-            .andExpect(jsonPath("$.data.position").value("NURSE"))
+            .andExpect(jsonPath("$.data.position").value("nurse"))
             .andExpect(jsonPath("$.data.token").value("lkdflsdm.sldfksld.jdfkjdfkj"))
             .andExpect(jsonPath("$.data.notLocked").value(true))
         ;
@@ -134,7 +134,7 @@ class UsersControllerTest {
             .andExpect(jsonPath("$.data.username").value("qwe"))
             .andExpect(jsonPath("$.data.role").value("USER"))
             .andExpect(jsonPath("$.data.workplace").value("SURGERY__TREATMENT_ROOM"))
-            .andExpect(jsonPath("$.data.position").value("NURSE"))
+            .andExpect(jsonPath("$.data.position").value("nurse"))
             .andExpect(jsonPath("$.data.token").value("lkdflsdm.sldfksld.jdfkjdfkj"))
             .andExpect(jsonPath("$.data.notLocked").value(true))
         ;
@@ -156,7 +156,7 @@ class UsersControllerTest {
     @Test
     void updateUser_ReturnsValidResponseEntity() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        UserUpdateDto newUser = new UserUpdateDto("Emma Weber", "SURGERY__TREATMENT_ROOM", "NURSE", true);
+        UserUpdateDto newUser = new UserUpdateDto("Emma Weber", "SURGERY__TREATMENT_ROOM", "nurse", true);
 
         mockMvc.perform(
                 put("/api/users/2")
@@ -171,7 +171,7 @@ class UsersControllerTest {
             .andExpect(jsonPath("$.data.username").value("qwe"))
             .andExpect(jsonPath("$.data.role").value("USER"))
             .andExpect(jsonPath("$.data.workplace").value("SURGERY__TREATMENT_ROOM"))
-            .andExpect(jsonPath("$.data.position").value("NURSE"))
+            .andExpect(jsonPath("$.data.position").value("nurse"))
             .andExpect(jsonPath("$.data.token").value("lkdflsdm.sldfksld.jdfkjdfkj"))
             .andExpect(jsonPath("$.data.notLocked").value(true))
         ;
