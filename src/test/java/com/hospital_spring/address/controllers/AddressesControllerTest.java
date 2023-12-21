@@ -100,6 +100,7 @@ public class AddressesControllerTest {
         mockMvc.perform(get("/api/addresses/1"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.status").value(200))
             .andExpect(jsonPath("$.message").value("Successful"))
             .andExpect(jsonPath("$.data._id").value(1))
             .andExpect(jsonPath("$.data.street").value("Baker Street"))
