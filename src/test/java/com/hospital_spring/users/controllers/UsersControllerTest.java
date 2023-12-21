@@ -142,7 +142,7 @@ class UsersControllerTest {
 
     @WithUserDetails(value = "authenticated user")
     @Test
-    void getUserById_ReturnsInvalidResponseEntity() throws Exception {
+    void getUserById_ReturnsNotFoundException() throws Exception {
         String userId = "3";
 
         mockMvc.perform(get("/api/users/" + userId))
