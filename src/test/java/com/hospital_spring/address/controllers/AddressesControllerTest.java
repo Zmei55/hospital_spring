@@ -27,7 +27,6 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(classes = TestConfig.class)
@@ -38,7 +37,7 @@ public class AddressesControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private UsersRepository usersRepository; // имитируем настоящий репозиторий из проекта
+    private UsersRepository usersRepository;
 
     @MockBean
     private AddressesRepository addressesRepository;
