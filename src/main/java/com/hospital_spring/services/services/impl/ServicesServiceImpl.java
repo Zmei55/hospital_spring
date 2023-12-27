@@ -45,7 +45,11 @@ public class ServicesServiceImpl implements ServicesService {
     public List<ServiceDto> getAllActiveByFilter(FilterServiceDto filter) {
         List<Service> serviceList = servicesRepository.findAllByNameContainingIgnoreCaseAndIsActiveTrue(filter.getFilter());
 
+        if (!serviceList.isEmpty()) {
         return ServiceDto.from(serviceList);
+        } else {
+            throw new NotFoundException("Services not found");
+        }
     }
 
     @Override
