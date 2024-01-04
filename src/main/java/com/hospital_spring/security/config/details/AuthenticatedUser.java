@@ -7,8 +7,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Getter
@@ -17,13 +18,16 @@ public class AuthenticatedUser implements UserDetails { // UserDetailsImpl
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-//        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().name());
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getWorkplace().name());
-        return Collections.singleton(authority);
+        SimpleGrantedAuthority authorityRole = new SimpleGrantedAuthority(user.getRole().name());
+        SimpleGrantedAuthority authorityWorkplace = new SimpleGrantedAuthority(user.getWorkplace().name());
 
-//        List<GrantedAuthority> authorities = new ArrayList<>();
-//        authorities.add(authority);
-//        return authorities;
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(authorityRole);
+        authorities.add(authorityWorkplace);
+        return authorities;
+//        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().name());
+//        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getWorkplace().name());
+//        return Collections.singleton(authority);
     }
 
     @Override
