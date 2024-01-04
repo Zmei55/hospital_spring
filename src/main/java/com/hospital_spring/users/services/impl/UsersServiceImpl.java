@@ -53,4 +53,13 @@ public class UsersServiceImpl implements UsersService {
 
         return ProfileDto.from(user);
     }
+
+    @Override
+    public void deleteById(Long userId) {
+        if (usersRepository.existsById(userId)) {
+            usersRepository.deleteById(userId);
+        } else {
+            throw new NotFoundException("User with id <" + userId + "> not found");
+        }
+    }
 }

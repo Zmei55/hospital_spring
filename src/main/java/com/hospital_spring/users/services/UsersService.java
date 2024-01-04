@@ -10,4 +10,6 @@ public interface UsersService {
     ProfileDto getUserById(Long userId);
 
     ProfileDto updateUser(Long userId, UserUpdateDto updatedUser);
+
+    void deleteById(Long userId);
 }

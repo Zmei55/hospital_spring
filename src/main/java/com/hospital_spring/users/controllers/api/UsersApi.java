@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +36,7 @@ public interface UsersApi {
         @AuthenticationPrincipal AuthenticatedUser currentUser
     );
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Get user by id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "User by id",
@@ -47,6 +49,7 @@ public interface UsersApi {
     @GetMapping("/{user-id}")
     ResponseEntity<ResponseDto> getUserById(@PathVariable("user-id") Long userId);
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Update user")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Update user by id",
@@ -60,4 +63,12 @@ public interface UsersApi {
     ResponseEntity<ResponseDto> updateUser(
         @Parameter(hidden = true) @PathVariable("user-id") Long userId,
         @RequestBody UserUpdateDto updatedUser);
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @Operation(summary = "Delete user", description = "Delete user by id")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Delete user by id")}
+    )
+    @DeleteMapping("/{user-id}")
+    void deleteById(@PathVariable("user-id") Long userId);
 }
