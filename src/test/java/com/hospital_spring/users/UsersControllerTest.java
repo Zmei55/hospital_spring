@@ -1,4 +1,4 @@
-package com.hospital_spring.users.controllers;
+package com.hospital_spring.users;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hospital_spring.address.repositories.AddressesRepository;
@@ -108,8 +108,8 @@ class UsersControllerTest {
             .andExpect(jsonPath("$.data.name").value("John Smith"))
             .andExpect(jsonPath("$.data.username").value("asd"))
             .andExpect(jsonPath("$.data.role").value("ADMIN"))
-            .andExpect(jsonPath("$.data.workplace").value("SURGERY__TREATMENT_ROOM"))
-            .andExpect(jsonPath("$.data.position").value("nurse"))
+            .andExpect(jsonPath("$.data.workplace").value("TREATMENT_ROOM"))
+            .andExpect(jsonPath("$.data.position").value("NURSE"))
             .andExpect(jsonPath("$.data.token").value("lkdflsdm.sldfksld.jdfkjdfkj"))
             .andExpect(jsonPath("$.data.notLocked").value(true))
         ;
@@ -136,8 +136,8 @@ class UsersControllerTest {
             .andExpect(jsonPath("$.data.name").value("Emma"))
             .andExpect(jsonPath("$.data.username").value("qwe"))
             .andExpect(jsonPath("$.data.role").value("USER"))
-            .andExpect(jsonPath("$.data.workplace").value("SURGERY__TREATMENT_ROOM"))
-            .andExpect(jsonPath("$.data.position").value("nurse"))
+            .andExpect(jsonPath("$.data.workplace").value("TREATMENT_ROOM"))
+            .andExpect(jsonPath("$.data.position").value("NURSE"))
             .andExpect(jsonPath("$.data.token").value("lkdflsdm.sldfksld.jdfkjdfkj"))
             .andExpect(jsonPath("$.data.notLocked").value(true))
         ;
@@ -159,7 +159,7 @@ class UsersControllerTest {
     @Test
     void updateUser_ReturnsValidResponseEntity() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        UserUpdateDto newUser = new UserUpdateDto("Emma Weber", "SURGERY__TREATMENT_ROOM", "nurse", true);
+        UserUpdateDto newUser = new UserUpdateDto("Emma Weber", "TREATMENT_ROOM", "NURSE", true);
 
         mockMvc.perform(
                 put("/api/users/2")
@@ -172,9 +172,9 @@ class UsersControllerTest {
             .andExpect(jsonPath("$.data._id").value(2))
             .andExpect(jsonPath("$.data.name").value("Emma Weber"))
             .andExpect(jsonPath("$.data.username").value("qwe"))
-            .andExpect(jsonPath("$.data.role").value("USER"))
-            .andExpect(jsonPath("$.data.workplace").value("SURGERY__TREATMENT_ROOM"))
-            .andExpect(jsonPath("$.data.position").value("nurse"))
+            .andExpect(jsonPath("$.data.role").value("ADMIN"))
+            .andExpect(jsonPath("$.data.workplace").value("TREATMENT_ROOM"))
+            .andExpect(jsonPath("$.data.position").value("NURSE"))
             .andExpect(jsonPath("$.data.token").value("lkdflsdm.sldfksld.jdfkjdfkj"))
             .andExpect(jsonPath("$.data.notLocked").value(true))
         ;
