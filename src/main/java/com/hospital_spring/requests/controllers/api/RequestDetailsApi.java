@@ -27,9 +27,9 @@ public interface RequestDetailsApi {
     @GetMapping("/{request-details-id}")
     ResponseEntity<ResponseDto> getById(@PathVariable("request-details-id") Long detailsId);
 
-    @Operation(summary = "Update", description = "Update request details data by id")
+    @Operation(summary = "Update", description = "Update request details status by id")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Update request details data by id",
+        @ApiResponse(responseCode = "200", description = "Update request details status by id",
             content = {
                 @Content(mediaType = "application/json",
                     schema = @Schema(implementation = ResponseDto.class))})}

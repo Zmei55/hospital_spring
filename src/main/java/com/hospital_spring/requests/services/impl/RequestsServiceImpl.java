@@ -102,12 +102,13 @@ public class RequestsServiceImpl implements RequestsService {
     }
 
     @Override
-    public RequestDto updateById(Long requestId, boolean isCompleted) {
+    public RequestDto updateStatusById(Long requestId, UpdateStatusRequestDto updateStatus) {
         Request request = requestsRepository.findById(requestId).orElseThrow(
             () -> new NotFoundException("Request with id <" + requestId + "> not found")
         );
 
-        request.setCompleted(isCompleted);
+        request.setCompleted(updateStatus.isCompleted());
+
         requestsRepository.save(request);
 
         return RequestDto.from(request);

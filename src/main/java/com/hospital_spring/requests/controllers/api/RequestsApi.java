@@ -2,6 +2,7 @@ package com.hospital_spring.requests.controllers.api;
 
 import com.hospital_spring.requests.dto.FilterRequestDto;
 import com.hospital_spring.requests.dto.NewRequestDto;
+import com.hospital_spring.requests.dto.UpdateStatusRequestDto;
 import com.hospital_spring.security.config.details.AuthenticatedUser;
 import com.hospital_spring.shared.dto.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -64,17 +65,17 @@ public interface RequestsApi {
     @PostMapping("/count")
     ResponseEntity<ResponseDto> getRequestsDBCount();
 
-    @Operation(summary = "Update", description = "Update request data by id")
+    @Operation(summary = "Update", description = "Update request status by id")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Update request data by id",
+        @ApiResponse(responseCode = "200", description = "Update request status by id",
             content = {
                 @Content(mediaType = "application/json",
                     schema = @Schema(implementation = ResponseDto.class))})}
     )
     @PutMapping("/{request-id}")
-    ResponseEntity<ResponseDto> updateById(
+    ResponseEntity<ResponseDto> updateStatusById(
         @PathVariable("request-id") Long requestId,
-        @RequestParam boolean isCompleted
+        @RequestParam UpdateStatusRequestDto updateStatus
     );
 
     @Operation(summary = "Delete request", description = "Delete request by id")

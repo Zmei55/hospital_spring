@@ -45,3 +45,23 @@ Content-Type: application/json
   "requestNumber": 1,
   "createdDate": ""
 }
+
+###
+
+#Update request status
+#false -> true
+PUT {{myHost}}/api/requests/5
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"isCompleted": true}
+
+###
+
+#Update request details status
+#false -> true
+PUT {{myHost}}/api/request-details/10
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"isCompleted": true}
