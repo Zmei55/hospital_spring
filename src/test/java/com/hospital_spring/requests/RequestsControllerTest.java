@@ -123,14 +123,6 @@ public class RequestsControllerTest {
             .address(address)
             .build();
 
-//        RequestDetails details = RequestDetails.builder()
-//            .id(1L)
-//            .service(service)
-//            .laboratory(laboratory)
-//            .isCompleted(false)
-//            .createdAt(LocalDateTime.now())
-//            .build();
-
         Request request = Request.builder()
             .id(1L)
             .requestNumber(1L)
@@ -307,8 +299,9 @@ public class RequestsControllerTest {
             .andExpect(jsonPath("$.status").value(200))
             .andExpect(jsonPath("$.message").value("Successful"))
             .andExpect(jsonPath("$.data._id").value(1))
-            .andExpect(jsonPath("$.data.serviceId").value(1))
-            .andExpect(jsonPath("$.data.laborId").value(1))
+            .andExpect(jsonPath("$.data.requestNumber").value(1))
+            .andExpect(jsonPath("$.data.patientId").value(1))
+            .andExpect(jsonPath("$.data.owner").value(1))
             .andExpect(jsonPath("$.data.completed").value(true))
         ;
     }
