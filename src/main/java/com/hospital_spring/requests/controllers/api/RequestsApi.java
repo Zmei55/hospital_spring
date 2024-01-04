@@ -81,7 +81,7 @@ public interface RequestsApi {
     @PutMapping("/{request-id}")
     ResponseEntity<ResponseDto> updateStatusById(
         @PathVariable("request-id") Long requestId,
-        @RequestParam UpdateStatusRequestDto updateStatus
+        @RequestBody UpdateStatusRequestDto updateStatus
     );
 
     @PreAuthorize("hasAuthority('ADMIN')")

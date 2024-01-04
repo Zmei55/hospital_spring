@@ -107,7 +107,7 @@ public class RequestsServiceImpl implements RequestsService {
             () -> new NotFoundException("Request with id <" + requestId + "> not found")
         );
 
-        request.setCompleted(updateStatus.isCompleted());
+        if (updateStatus.isCompleted() != request.isCompleted()) request.setCompleted(updateStatus.isCompleted());
 
         requestsRepository.save(request);
 
