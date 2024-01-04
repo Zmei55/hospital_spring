@@ -10,6 +10,9 @@ import com.hospital_spring.requests.repositories.SearchRequestRepository;
 import com.hospital_spring.services.repositories.ServicesRepository;
 import com.hospital_spring.test.config.TestConfig;
 import com.hospital_spring.users.dto.UserUpdateDto;
+import com.hospital_spring.users.enums.Position;
+import com.hospital_spring.users.enums.Role;
+import com.hospital_spring.users.enums.Workplace;
 import com.hospital_spring.users.model.User;
 import com.hospital_spring.users.repositories.UsersRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -70,9 +73,9 @@ class UsersControllerTest {
                 .id(1L)
                 .username("asd")
                 .name("John Smith")
-                .role(User.Role.ADMIN)
-                .workplace(User.Workplace.SURGERY__TREATMENT_ROOM)
-                .position("nurse")
+                .role(Role.ADMIN)
+                .workplace(Workplace.TREATMENT_ROOM)
+                .position(Position.NURSE)
                 .isNotLocked(true)
                 .token("lkdflsdm.sldfksld.jdfkjdfkj")
                 .build()
@@ -84,9 +87,9 @@ class UsersControllerTest {
                 .id(2L)
                 .username("qwe")
                 .name("Emma")
-                .role(User.Role.USER)
-                .workplace(User.Workplace.SURGERY__TREATMENT_ROOM)
-                .position("nurse")
+                .role(Role.ADMIN)
+                .workplace(Workplace.TREATMENT_ROOM)
+                .position(Position.NURSE)
                 .isNotLocked(true)
                 .token("lkdflsdm.sldfksld.jdfkjdfkj")
                 .build()

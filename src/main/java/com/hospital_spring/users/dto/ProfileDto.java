@@ -37,7 +37,7 @@ public class ProfileDto {
             .username(user.getUsername())
             .role(user.getRole().name())
             .workplace(user.getWorkplace().name())
-            .position(user.getPosition())
+            .position(user.getPosition().name())
             .isNotLocked(user.isNotLocked())
             .token(user.getToken())
             .build();

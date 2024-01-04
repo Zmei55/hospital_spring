@@ -29,7 +29,7 @@ public class UserDto {
             ._id(user.getId())
             .username(user.getUsername())
             .workplace(user.getWorkplace().name())
-            .position(user.getPosition())
+            .position(user.getPosition().name())
             .isNotLocked(user.isNotLocked())
             .build();
     }

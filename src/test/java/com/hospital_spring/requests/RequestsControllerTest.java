@@ -16,6 +16,9 @@ import com.hospital_spring.requests.repositories.SearchRequestRepository;
 import com.hospital_spring.services.model.Service;
 import com.hospital_spring.services.repositories.ServicesRepository;
 import com.hospital_spring.test.config.TestConfig;
+import com.hospital_spring.users.enums.Position;
+import com.hospital_spring.users.enums.Role;
+import com.hospital_spring.users.enums.Workplace;
 import com.hospital_spring.users.model.User;
 import com.hospital_spring.users.repositories.UsersRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -77,9 +80,9 @@ public class RequestsControllerTest {
             .id(1L)
             .username("asd")
             .name("John Smith")
-            .role(User.Role.ADMIN)
-            .workplace(User.Workplace.SURGERY__TREATMENT_ROOM)
-            .position("nurse")
+            .role(Role.ADMIN)
+            .workplace(Workplace.TREATMENT_ROOM)
+            .position(Position.NURSE)
             .isNotLocked(true)
             .token("lkdflsdm.sldfksld.jdfkjdfkj")
             .build();

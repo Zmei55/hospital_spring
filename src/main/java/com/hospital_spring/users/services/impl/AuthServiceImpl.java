@@ -2,6 +2,9 @@ package com.hospital_spring.users.services.impl;
 
 import com.hospital_spring.shared.exceptions.UserIsPresentException;
 import com.hospital_spring.users.dto.ProfileDto;
+import com.hospital_spring.users.enums.Position;
+import com.hospital_spring.users.enums.Role;
+import com.hospital_spring.users.enums.Workplace;
 import com.hospital_spring.users.model.User;
 import com.hospital_spring.users.repositories.UsersRepository;
 import com.hospital_spring.users.services.AuthService;
@@ -33,9 +36,9 @@ public class AuthServiceImpl implements AuthService {
             .username(username)
             .hashPassword(passwordEncoder.encode(password))
             .name(name)
-            .role(User.Role.USER)
-            .workplace(User.Workplace.valueOf(workplace))
-            .position(position)
+            .role(Role.USER)
+            .workplace(Workplace.valueOf(workplace))
+            .position(Position.valueOf(position))
             .isNotLocked(true)
             .createdAt(LocalDateTime.now())
             .build();

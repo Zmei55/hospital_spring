@@ -4,6 +4,8 @@ import com.hospital_spring.security.config.details.AuthenticatedUser;
 import com.hospital_spring.shared.exceptions.NotFoundException;
 import com.hospital_spring.users.dto.ProfileDto;
 import com.hospital_spring.users.dto.UserUpdateDto;
+import com.hospital_spring.users.enums.Position;
+import com.hospital_spring.users.enums.Workplace;
 import com.hospital_spring.users.model.User;
 import com.hospital_spring.users.repositories.UsersRepository;
 import com.hospital_spring.users.services.UsersService;
@@ -44,8 +46,8 @@ public class UsersServiceImpl implements UsersService {
             );
 
         if (updatedUser.getName() != null) user.setName(updatedUser.getName());
-        if (updatedUser.getWorkplace() != null) user.setWorkplace(User.Workplace.valueOf(updatedUser.getWorkplace()));
-        if (updatedUser.getPosition() != null) user.setPosition(updatedUser.getPosition());
+        if (updatedUser.getWorkplace() != null) user.setWorkplace(Workplace.valueOf(updatedUser.getWorkplace()));
+        if (updatedUser.getPosition() != null) user.setPosition(Position.valueOf(updatedUser.getPosition()));
 
         usersRepository.save(user);
 

@@ -1,6 +1,10 @@
 package com.hospital_spring.users.model;
 
 import com.hospital_spring.requests.model.Request;
+import com.hospital_spring.users.enums.Position;
+import com.hospital_spring.users.enums.Role;
+import com.hospital_spring.users.enums.Station;
+import com.hospital_spring.users.enums.Workplace;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,10 +23,6 @@ import java.util.List;
 @Builder
 @Table(name = "users")
 public class User {
-    public enum Role {ADMIN, USER}
-
-    public enum Workplace {SURGERY__TREATMENT_ROOM}
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,11 +36,13 @@ public class User {
     @NotNull
     @Enumerated(value = EnumType.STRING)
     private Role role;
-    @NotNull
+    @Enumerated(value = EnumType.STRING)
+    private Station station;
     @Enumerated(value = EnumType.STRING)
     private Workplace workplace;
     @NotNull
-    private String position;
+    @Enumerated(value = EnumType.STRING)
+    private Position position;
     @NotNull
     private LocalDateTime createdAt;
     @NotNull

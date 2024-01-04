@@ -1,6 +1,9 @@
 package com.hospital_spring.test.config;
 
 import com.hospital_spring.security.config.details.AuthenticatedUser;
+import com.hospital_spring.users.enums.Position;
+import com.hospital_spring.users.enums.Role;
+import com.hospital_spring.users.enums.Workplace;
 import com.hospital_spring.users.model.User;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -37,9 +40,9 @@ public class TestConfig {
                             .username("asd")
                             .name("John Smith")
                             .email("john_smith@mail.com")
-                            .role(User.Role.ADMIN)
-                            .workplace(User.Workplace.SURGERY__TREATMENT_ROOM)
-                            .position("nurse")
+                            .role(Role.ADMIN)
+                            .workplace(Workplace.TREATMENT_ROOM)
+                            .position(Position.NURSE)
                             .token("lkdflsdm.sldfksld.jdfkjdfkj")
                             .build()
                     );
