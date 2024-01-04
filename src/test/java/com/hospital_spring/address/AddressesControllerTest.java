@@ -1,4 +1,4 @@
-package com.hospital_spring.address.controllers;
+package com.hospital_spring.address;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hospital_spring.address.dto.NewAddressDto;

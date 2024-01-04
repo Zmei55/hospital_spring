@@ -135,7 +135,7 @@ class UsersControllerTest {
             .andExpect(jsonPath("$.data._id").value(2))
             .andExpect(jsonPath("$.data.name").value("Emma"))
             .andExpect(jsonPath("$.data.username").value("qwe"))
-            .andExpect(jsonPath("$.data.role").value("USER"))
+            .andExpect(jsonPath("$.data.role").value("ADMIN"))
             .andExpect(jsonPath("$.data.workplace").value("TREATMENT_ROOM"))
             .andExpect(jsonPath("$.data.position").value("NURSE"))
             .andExpect(jsonPath("$.data.token").value("lkdflsdm.sldfksld.jdfkjdfkj"))
