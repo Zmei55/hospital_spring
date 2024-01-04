@@ -2,8 +2,6 @@ package com.hospital_spring.users.controllers.api;
 
 import com.hospital_spring.security.config.details.AuthenticatedUser;
 import com.hospital_spring.shared.dto.ResponseDto;
-import com.hospital_spring.users.dto.ProfileDto;
-import com.hospital_spring.users.dto.UserDto;
 import com.hospital_spring.users.dto.UserUpdateDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -27,7 +25,7 @@ public interface UsersApi {
         @ApiResponse(responseCode = "200", description = "Current user",
             content = {
                 @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ProfileDto.class))
+                    schema = @Schema(implementation = ResponseDto.class))
             }
         )
     })
@@ -54,7 +52,7 @@ public interface UsersApi {
         @ApiResponse(responseCode = "200", description = "Update user by id",
             content = {
                 @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = UserDto.class))
+                    schema = @Schema(implementation = ResponseDto.class))
             }
         )
     })
