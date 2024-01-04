@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @Tags(value = {
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 })
 @RequestMapping("/api/patients")
 public interface PatientsApi {
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Add", description = "Add new patient")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "New patient",
@@ -48,6 +50,7 @@ public interface PatientsApi {
     @PostMapping(value = "/")
     ResponseEntity<ResponseDto> getByFilter(@RequestBody PatientFilterDto filter);
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Update", description = "Update patient data by id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Update patient data by id",
@@ -61,6 +64,7 @@ public interface PatientsApi {
         @RequestBody NewPatientDto newPatient
     );
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Delete patient", description = "Delete patient by id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Delete patient by id")}

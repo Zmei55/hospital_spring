@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @Tags(value = {
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 })
 @RequestMapping("/api/request-details")
 public interface RequestDetailsApi {
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('TREATMENT_ROOM')")
     @Operation(summary = "Get by id", description = "Get request details by id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Request details by id",
@@ -27,6 +29,7 @@ public interface RequestDetailsApi {
     @GetMapping("/{request-details-id}")
     ResponseEntity<ResponseDto> getById(@PathVariable("request-details-id") Long detailsId);
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Update", description = "Update request details status by id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Update request details status by id",
@@ -40,6 +43,7 @@ public interface RequestDetailsApi {
         @RequestBody UpdateStatusRequestDetailsDto updateStatus
         );
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Delete request details", description = "Delete request details by id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Delete request details by id")}
