@@ -9,14 +9,10 @@ import com.hospital_spring.patients.model.Patient;
 import com.hospital_spring.patients.repositories.PatientsRepository;
 import com.hospital_spring.requests.dto.*;
 import com.hospital_spring.requests.model.Request;
-import com.hospital_spring.requests.model.RequestDetails;
 import com.hospital_spring.requests.model.SearchRequest;
 import com.hospital_spring.requests.repositories.RequestDetailsRepository;
 import com.hospital_spring.requests.repositories.RequestsRepository;
 import com.hospital_spring.requests.repositories.SearchRequestRepository;
-import com.hospital_spring.services.dto.FilterServiceDto;
-import com.hospital_spring.services.dto.NewServiceDto;
-import com.hospital_spring.services.dto.UpdateServiceDto;
 import com.hospital_spring.services.model.Service;
 import com.hospital_spring.services.repositories.ServicesRepository;
 import com.hospital_spring.test.config.TestConfig;
@@ -41,7 +37,6 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
