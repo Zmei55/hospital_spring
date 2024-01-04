@@ -13,16 +13,14 @@ import lombok.NoArgsConstructor;
 public class UserForTokenDto {
     private Long id;
     private String username;
-    private String name;
-    private String position;
+    private String workplace;
     private boolean isNotLocked;
 
     public static UserForTokenDto from(User user) {
         return UserForTokenDto.builder()
             .id(user.getId())
             .username(user.getUsername())
-            .name(user.getName())
-            .position(user.getPosition())
+            .workplace(user.getWorkplace().name())
             .isNotLocked(user.isNotLocked())
             .build();
     }

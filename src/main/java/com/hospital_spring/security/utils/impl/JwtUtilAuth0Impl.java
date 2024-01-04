@@ -8,6 +8,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.hospital_spring.security.config.details.AuthenticatedUser;
 import com.hospital_spring.security.utils.JwtUtil;
 import com.hospital_spring.users.dto.UserForTokenDto;
+import com.hospital_spring.users.enums.Workplace;
 import com.hospital_spring.users.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,7 +28,7 @@ import java.util.Date;
 @Component
 public class JwtUtilAuth0Impl implements JwtUtil {
 //    private static final long ACCESS_TOKEN_EXPIRES_TIME = 60 * 1000; // one minute
-    private static final long ACCESS_TOKEN_EXPIRES_TIME = 20 * 60 * 1000; // three minutes
+    private static final long ACCESS_TOKEN_EXPIRES_TIME = 20 * 60 * 1000; // 20 minutes
 
     @Value("${jwt.secret}")
     private String secret;
@@ -40,9 +41,7 @@ public class JwtUtilAuth0Impl implements JwtUtil {
             .withSubject(user.getUsername())
             .withExpiresAt(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRES_TIME)) // на какое время выдан accessToken
             .withClaim("id", user.getId())
-            .withClaim("name", user.getName())
             .withClaim("workplace", authority)
-            .withClaim("position", user.getPosition())
             .withClaim("isNotLocked", user.isNotLocked())
             .withIssuer(issuer)
             .sign(algorithm);
@@ -58,9 +57,7 @@ public class JwtUtilAuth0Impl implements JwtUtil {
             User.builder()
                 .id(parsedToken.getId())
                 .username(parsedToken.getUsername())
-                .name(parsedToken.getName())
-                .workplace(User.Workplace.valueOf(parsedToken.getWorkplace()))
-                .position(parsedToken.getPosition())
+                .workplace(Workplace.valueOf(parsedToken.getWorkplace()))
                 .isNotLocked(parsedToken.isNotLocked())
                 .build()
         );
@@ -81,17 +78,15 @@ public class JwtUtilAuth0Impl implements JwtUtil {
 
         String username = decodedJWT.getSubject();
         Long id = decodedJWT.getClaim("id").asLong();
-        String name = decodedJWT.getClaim("name").asString();
         String workplace = decodedJWT.getClaim("workplace").asString();
-        String position = decodedJWT.getClaim("position").asString();
         boolean isNotLocked = decodedJWT.getClaim("isNotLocked").asBoolean();
+
+
 
         return ParsedToken.builder()
             .id(id)
             .username(username)
-            .name(name)
             .workplace(workplace)
-            .position(position)
             .isNotLocked(isNotLocked)
             .build();
     }
@@ -104,9 +99,7 @@ public class JwtUtilAuth0Impl implements JwtUtil {
     private static class ParsedToken {
         private Long id;
         private String username;
-        private String name;
         private String workplace;
-        private String position;
         private boolean isNotLocked;
     }
 }

@@ -49,7 +49,7 @@ public class TokenSecurityConfig {
             .antMatchers("/swagger-ui/**").permitAll()
             .antMatchers("/v3/api-docs/**").permitAll()
             .antMatchers(HttpMethod.POST, SIGN_UP_URL).not().fullyAuthenticated() //Доступ только POST для не зарегистрированных пользователей
-            .anyRequest().hasAuthority("SURGERY__TREATMENT_ROOM")
+            .anyRequest().authenticated()
             .and()
             .exceptionHandling()
             .defaultAuthenticationEntryPointFor((
