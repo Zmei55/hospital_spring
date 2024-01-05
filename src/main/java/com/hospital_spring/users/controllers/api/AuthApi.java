@@ -1,6 +1,7 @@
 package com.hospital_spring.users.controllers.api;
 
 import com.hospital_spring.shared.dto.ResponseDto;
+import com.hospital_spring.users.dto.NewUserDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -10,8 +11,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Tags(value = {
     @Tag(name = "Authentication")
@@ -28,12 +29,5 @@ public interface AuthApi {
         )
     })
     @PostMapping("/register")
-    ResponseEntity<ResponseDto> signUp(
-        @RequestParam String username,
-        @RequestParam String password,
-        @RequestParam String name,
-        @RequestParam String department,
-        @RequestParam String workplace,
-        @RequestParam String position
-    );
+    ResponseEntity<ResponseDto> signUp(@RequestBody NewUserDto newUser);
 }
