@@ -2,6 +2,7 @@ package com.hospital_spring.users.controllers;
 
 import com.hospital_spring.shared.dto.ResponseDto;
 import com.hospital_spring.users.controllers.api.AuthApi;
+import com.hospital_spring.users.dto.NewUserDto;
 import com.hospital_spring.users.services.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,23 +15,8 @@ public class AuthController implements AuthApi {
     private final AuthService authService;
 
     @Override
-    public ResponseEntity<ResponseDto> signUp(
-        String username,
-        String password,
-        String name,
-        String department,
-        String workplace,
-        String position
-    ) {
+    public ResponseEntity<ResponseDto> signUp(NewUserDto newUser) {
         return ResponseEntity.status(HttpStatus.CREATED.value())
-            .body(ResponseDto.fromCreated(
-                authService.signUp(
-                    username,
-                    password,
-                    name,
-                    department,
-                    workplace,
-                    position
-                )));
+            .body(ResponseDto.fromCreated(authService.signUp(newUser)));
     }
 }
