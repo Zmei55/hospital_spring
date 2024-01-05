@@ -7,6 +7,7 @@ public interface AuthService {
         String username,
         String password,
         String name,
+        String department,
         String workplace,
         String position
     );

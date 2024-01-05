@@ -2,6 +2,7 @@ package com.hospital_spring.users.services.impl;
 
 import com.hospital_spring.shared.exceptions.UserIsPresentException;
 import com.hospital_spring.users.dto.ProfileDto;
+import com.hospital_spring.users.enums.Department;
 import com.hospital_spring.users.enums.Position;
 import com.hospital_spring.users.enums.Role;
 import com.hospital_spring.users.enums.Workplace;
@@ -25,6 +26,7 @@ public class AuthServiceImpl implements AuthService {
         String username,
         String password,
         String name,
+        String department,
         String workplace,
         String position
     ) throws UserIsPresentException {
@@ -37,6 +39,7 @@ public class AuthServiceImpl implements AuthService {
             .hashPassword(passwordEncoder.encode(password))
             .name(name)
             .role(Role.USER)
+            .department(Department.valueOf(department))
             .workplace(Workplace.valueOf(workplace))
             .position(Position.valueOf(position))
             .isNotLocked(true)

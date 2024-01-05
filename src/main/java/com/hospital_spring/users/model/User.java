@@ -3,7 +3,7 @@ package com.hospital_spring.users.model;
 import com.hospital_spring.requests.model.Request;
 import com.hospital_spring.users.enums.Position;
 import com.hospital_spring.users.enums.Role;
-import com.hospital_spring.users.enums.Station;
+import com.hospital_spring.users.enums.Department;
 import com.hospital_spring.users.enums.Workplace;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,7 +37,7 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private Role role;
     @Enumerated(value = EnumType.STRING)
-    private Station station;
+    private Department department;
     @Enumerated(value = EnumType.STRING)
     private Workplace workplace;
     @NotNull

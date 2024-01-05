@@ -21,14 +21,16 @@ public class ProfileDto {
     private String username;
     @Schema(description = "role of the user", example = "USER")
     private String role;
-    @Schema(description = "workplace of the user", example = "surgery")
+    @Schema(description = "department of the user", example = "surgery")
+    private String department;
+    @Schema(description = "workplace of the user", example = "treatment_room")
     private String workplace;
     @Schema(description = "position of work")
     private String position;
-    @Schema(description = "user is not locked", example = "true")
-    private boolean isNotLocked;
-    @Schema(description = "token of the account", example = "ksjdnf.sdkjnfsk.sdkfkdlfk")
-    private String token;
+//    @Schema(description = "user is not locked", example = "true")
+//    private boolean isNotLocked;
+//    @Schema(description = "token of the account", example = "ksjdnf.sdkjnfsk.sdkfkdlfk")
+//    private String token;
 
     public static ProfileDto from(User user) {
         return ProfileDto.builder()
@@ -36,10 +38,11 @@ public class ProfileDto {
             .name(user.getName())
             .username(user.getUsername())
             .role(user.getRole().name())
+            .department(user.getDepartment().name())
             .workplace(user.getWorkplace().name())
             .position(user.getPosition().name())
-            .isNotLocked(user.isNotLocked())
-            .token(user.getToken())
+//            .isNotLocked(user.isNotLocked())
+//            .token(user.getToken())
             .build();
     }
 }

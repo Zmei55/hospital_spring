@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 public class UserUpdateDto {
     @Schema(description = "Name of the user", example = "John")
     private String name;
+    @Schema(description = "department of the user", example = "surgery")
+    private String department;
     @Schema(description = "workplace of the user", example = "surgery")
     private String workplace;
     @Schema(description = "position of work")
