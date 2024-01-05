@@ -32,6 +32,7 @@ public interface AuthApi {
         @RequestParam String username,
         @RequestParam String password,
         @RequestParam String name,
+        @RequestParam String department,
         @RequestParam String workplace,
         @RequestParam String position
     );

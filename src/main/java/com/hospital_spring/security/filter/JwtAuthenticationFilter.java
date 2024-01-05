@@ -61,8 +61,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         UserForTokenDto userForToken = UserForTokenDto.builder()
             .id(user.getId())
             .username(user.getUsername())
-            .name(user.getName())
-            .position(user.getPosition())
+            .workplace(user.getWorkplace().name())
             .isNotLocked(user.isNotLocked())
             .build();
 

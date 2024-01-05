@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @Tags(value = {
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 })
 @RequestMapping("/api/labors")
 public interface LaboratoriesApi {
+
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Add", description = "Add new laboratory")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "New laboratory",
@@ -28,6 +31,7 @@ public interface LaboratoriesApi {
     @PostMapping("/add")
     ResponseEntity<ResponseDto> addNew(@RequestBody NewLaboratoryDto newLaboratory);
 
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('TREATMENT_ROOM')")
     @Operation(summary = "Get by id", description = "Get laboratory by id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "laboratory by id",
@@ -38,6 +42,7 @@ public interface LaboratoriesApi {
     @GetMapping("/{labor-id}")
     ResponseEntity<ResponseDto> getById(@PathVariable("labor-id") Long laborId);
 
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('TREATMENT_ROOM')")
     @Operation(summary = "Get all", description = "Get all is active")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "laboratories is active",
@@ -48,6 +53,7 @@ public interface LaboratoriesApi {
     @GetMapping("/")
     ResponseEntity<ResponseDto> getAllActive();
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Update", description = "Update laboratory data by id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Update laboratory data by id",
@@ -59,8 +65,9 @@ public interface LaboratoriesApi {
     ResponseEntity<ResponseDto> updateById(
         @PathVariable("labor-id") Long laborId,
         @RequestBody UpdateLaboratoryDto updateLaboratory
-        );
+    );
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Delete laboratory", description = "Delete laboratory by id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Delete laboratory by id")}

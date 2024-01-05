@@ -2,6 +2,7 @@ package com.hospital_spring.requests.controllers.api;
 
 import com.hospital_spring.requests.dto.FilterRequestDto;
 import com.hospital_spring.requests.dto.NewRequestDto;
+import com.hospital_spring.requests.dto.UpdateStatusRequestDto;
 import com.hospital_spring.security.config.details.AuthenticatedUser;
 import com.hospital_spring.shared.dto.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 })
 @RequestMapping("/api/requests")
 public interface RequestsApi {
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('TREATMENT_ROOM')")
     @Operation(summary = "Add", description = "Add new request")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "New request",
@@ -34,6 +37,7 @@ public interface RequestsApi {
         @RequestBody NewRequestDto newRequest
         );
 
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('TREATMENT_ROOM')")
     @Operation(summary = "Get by id", description = "Get request by id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Request by id",
@@ -44,6 +48,7 @@ public interface RequestsApi {
     @GetMapping("/{request-id}")
     ResponseEntity<ResponseDto> getById(@PathVariable("request-id") Long requestId);
 
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('TREATMENT_ROOM')")
     @Operation(summary = "Get by filter", description = "Get request by filter")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Request by filter",
@@ -54,6 +59,7 @@ public interface RequestsApi {
     @PostMapping("/")
     ResponseEntity<ResponseDto> getByFilter(@RequestBody FilterRequestDto filter);
 
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('TREATMENT_ROOM')")
     @Operation(summary = "Get count", description = "Get request count")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Request count",
@@ -64,19 +70,21 @@ public interface RequestsApi {
     @PostMapping("/count")
     ResponseEntity<ResponseDto> getRequestsDBCount();
 
-    @Operation(summary = "Update", description = "Update request data by id")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @Operation(summary = "Update", description = "Update request status by id")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Update request data by id",
+        @ApiResponse(responseCode = "200", description = "Update request status by id",
             content = {
                 @Content(mediaType = "application/json",
                     schema = @Schema(implementation = ResponseDto.class))})}
     )
     @PutMapping("/{request-id}")
-    ResponseEntity<ResponseDto> updateById(
+    ResponseEntity<ResponseDto> updateStatusById(
         @PathVariable("request-id") Long requestId,
-        @RequestParam boolean isCompleted
+        @RequestBody UpdateStatusRequestDto updateStatus
     );
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Delete request", description = "Delete request by id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Delete request by id")}

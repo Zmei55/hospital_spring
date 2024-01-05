@@ -18,6 +18,7 @@ public class AuthController implements AuthApi {
         String username,
         String password,
         String name,
+        String department,
         String workplace,
         String position
     ) {
@@ -27,6 +28,7 @@ public class AuthController implements AuthApi {
                     username,
                     password,
                     name,
+                    department,
                     workplace,
                     position
                 )));

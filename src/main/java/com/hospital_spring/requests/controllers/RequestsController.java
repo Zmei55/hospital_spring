@@ -3,6 +3,7 @@ package com.hospital_spring.requests.controllers;
 import com.hospital_spring.requests.controllers.api.RequestsApi;
 import com.hospital_spring.requests.dto.FilterRequestDto;
 import com.hospital_spring.requests.dto.NewRequestDto;
+import com.hospital_spring.requests.dto.UpdateStatusRequestDto;
 import com.hospital_spring.requests.services.RequestsService;
 import com.hospital_spring.security.config.details.AuthenticatedUser;
 import com.hospital_spring.shared.dto.ResponseDto;
@@ -51,9 +52,9 @@ public class RequestsController implements RequestsApi {
     }
 
     @Override
-    public ResponseEntity<ResponseDto> updateById(Long requestId, boolean isCompleted) {
+    public ResponseEntity<ResponseDto> updateStatusById(Long requestId, UpdateStatusRequestDto updateStatus) {
         return ResponseEntity.ok(ResponseDto.fromSuccessful(
-            requestsService.updateById(requestId, isCompleted)
+            requestsService.updateStatusById(requestId, updateStatus)
         ));
     }
 

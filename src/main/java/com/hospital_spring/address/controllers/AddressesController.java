@@ -28,7 +28,7 @@ public class AddressesController implements AddressesApi {
     public ResponseEntity<ResponseDto> getById(Long addressId) {
         return ResponseEntity.status(HttpStatus.OK.value())
             .body(ResponseDto.builder()
-                .message("Created")
+                .message("Successful")
                 .status(HttpStatus.OK.value())
                 .data(addressesService.getById(addressId))
                 .build());
@@ -38,7 +38,7 @@ public class AddressesController implements AddressesApi {
     public ResponseEntity<ResponseDto> updateById(Long addressId, NewAddressDto newAddress) {
         return ResponseEntity.status(HttpStatus.OK.value())
             .body(ResponseDto.builder()
-                .message("Created")
+                .message("Successful")
                 .status(HttpStatus.OK.value())
                 .data(addressesService.updateById(addressId, newAddress))
                 .build());

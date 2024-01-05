@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @Tags(value = {
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 })
 @RequestMapping("/api/services")
 public interface ServicesApi {
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Add", description = "Add new service")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "New service",
@@ -29,6 +31,7 @@ public interface ServicesApi {
     @PostMapping("/add")
     ResponseEntity<ResponseDto> addNew(@RequestBody NewServiceDto newService);
 
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('TREATMENT_ROOM')")
     @Operation(summary = "Get by id", description = "Get service by id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "service by id",
@@ -39,6 +42,7 @@ public interface ServicesApi {
     @GetMapping("/{service-id}")
     ResponseEntity<ResponseDto> getById(@PathVariable("service-id") Long serviceId);
 
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('TREATMENT_ROOM')")
     @Operation(summary = "Get all", description = "Get all services is active")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "services is active",
@@ -49,6 +53,7 @@ public interface ServicesApi {
     @PostMapping("/")
     ResponseEntity<ResponseDto> getAllActiveByFilter(@RequestBody FilterServiceDto filter);
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Update", description = "Update service data by id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Update service data by id",
@@ -62,6 +67,7 @@ public interface ServicesApi {
         @RequestBody UpdateServiceDto updateService
         );
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Delete service", description = "Delete service by id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Delete service by id")}

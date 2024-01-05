@@ -3,7 +3,6 @@ package com.hospital_spring.users.controllers;
 import com.hospital_spring.security.config.details.AuthenticatedUser;
 import com.hospital_spring.shared.dto.ResponseDto;
 import com.hospital_spring.users.controllers.api.UsersApi;
-import com.hospital_spring.users.dto.ProfileDto;
 import com.hospital_spring.users.dto.UserUpdateDto;
 import com.hospital_spring.users.services.UsersService;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,12 @@ public class UsersController implements UsersApi {
     }
 
     @Override
-    public ResponseEntity<ProfileDto> updateUser(Long userId, UserUpdateDto updatedUser) {
-        return ResponseEntity.ok(usersService.updateUser(userId, updatedUser));
+    public ResponseEntity<ResponseDto> updateUser(Long userId, UserUpdateDto updatedUser) {
+        return ResponseEntity.ok(ResponseDto.fromSuccessful(usersService.updateUser(userId, updatedUser)));
+    }
+
+    @Override
+    public void deleteById(Long userId) {
+        usersService.deleteById(userId);
     }
 }

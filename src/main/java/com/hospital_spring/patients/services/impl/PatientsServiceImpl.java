@@ -57,8 +57,8 @@ public class PatientsServiceImpl implements PatientsService {
 
     @Override
     public List<PatientDto> getByFilter(PatientFilterDto filter) {
-        String name = !filter.getName().isEmpty() ? filter.getName() : null;
-        String birthDate = !filter.getBirthDate().isEmpty() ? filter.getBirthDate() : null;
+        String name = filter.getName() != null ? filter.getName() : null;
+        String birthDate = filter.getBirthDate() != null ? filter.getBirthDate() : null;
         int number = filter.getCardNumber() != 0 ? filter.getCardNumber() : 0;
 
         List<Patient> patientList = patientsRepository.findAllByNameContainingIgnoreCaseOrBirthDateOrCardNumber(

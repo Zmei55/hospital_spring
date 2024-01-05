@@ -67,7 +67,7 @@ public class RequestDetailsServiceImpl implements RequestDetailsService {
             () -> new NotFoundException("RequestDetails with id <" + detailsId + "> not found")
         );
 
-        details.setCompleted(updateStatus.isCompleted());
+        if (updateStatus.isCompleted() != details.isCompleted()) details.setCompleted(updateStatus.isCompleted());
 
         detailsRepository.save(details);
 

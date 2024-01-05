@@ -1,9 +1,6 @@
 package com.hospital_spring.requests.services;
 
-import com.hospital_spring.requests.dto.FilterRequestDto;
-import com.hospital_spring.requests.dto.NewRequestDto;
-import com.hospital_spring.requests.dto.RequestDto;
-import com.hospital_spring.requests.dto.SearchRequestDto;
+import com.hospital_spring.requests.dto.*;
 import com.hospital_spring.security.config.details.AuthenticatedUser;
 
 import java.util.List;
@@ -20,7 +17,10 @@ public interface RequestsService {
 
     Long getRequestsDBCount();
 
-    RequestDto updateById(Long requestId, boolean isCompleted);
+    RequestDto updateStatusById(
+        Long requestId,
+        UpdateStatusRequestDto updateStatus
+    );
 
     void deleteById(Long requestId);
 }

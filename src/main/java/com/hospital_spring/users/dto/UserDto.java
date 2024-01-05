@@ -17,6 +17,8 @@ public class UserDto {
     private Long _id;
     @Schema(description = "username of the user", example = "username325")
     private String username;
+    @Schema(description = "department of the user", example = "surgery")
+    private String department;
     @Schema(description = "workplace of the user", example = "surgery")
     private String workplace;
     @Schema(description = "position of work")
@@ -28,8 +30,9 @@ public class UserDto {
         return UserDto.builder()
             ._id(user.getId())
             .username(user.getUsername())
+            .department(user.getDepartment().name())
             .workplace(user.getWorkplace().name())
-            .position(user.getPosition())
+            .position(user.getPosition().name())
             .isNotLocked(user.isNotLocked())
             .build();
     }
